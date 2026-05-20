@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JIHYUN.OS — Portfolio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@500;700;900&family=Pretendard:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     RESET & VARIABLES
+  ============================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --desktop-bg: #B5B0A1;
+    --window-bg: #FFFFFF;
+    --black: #0A0908;
+    --accent: #C9442C;
+    --yellow: #F2C94C;
+    --cream: #EDE6D3;
+    --soft: #E8E4D6;
+    --muted: #5F5C53;
+    --shadow-sm: 3px 3px 0 var(--black);
+    --shadow-md: 4px 4px 0 var(--black);
+    --shadow-lg: 8px 8px 0 var(--black);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    min-height: 100vh;
+    background: var(--desktop-bg);
+    background-image:
+      linear-gradient(120deg, rgba(201,68,44,0.12), transparent 32%),
+      linear-gradient(300deg, rgba(242,201,76,0.13), transparent 34%),
+      radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 4px 4px;
+    background-attachment: fixed;
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    color: var(--black);
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 28px 0 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(10,9,8,0.08) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 160px, #000 82%, transparent 100%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ============================================
+     MENUBAR (sticky throughout)
+  ============================================ */
+  .menubar {
+    position: sticky;
+    top: 0;
+    height: 28px;
+    background: #fff;
+    border-bottom: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 100;
+    gap: 22px;
+    box-shadow: 0 2px 0 rgba(10,9,8,0.15);
+  }
+
+  .menubar-logo {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .menubar-logo::before {
+    content: '◆';
+    margin-right: 6px;
+    color: var(--accent);
+  }
+
+  .menubar-items {
+    display: flex;
+    gap: 18px;
+    color: #333;
+  }
+  .menubar-items a {
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+  .menubar-items a:hover {
+    background: var(--black);
+    color: #fff;
+    padding: 0 4px;
+  }
+
+  .menubar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #333;
+  }
+
+  .battery-dots { display: inline-flex; gap: 2px; }
+  .battery-dots i {
+    width: 6px; height: 10px;
+    background: var(--black);
+    display: block;
+  }
+  .battery-dots i:last-child {
+    background: transparent;
+    border: 1.5px solid var(--black);
+  }
+
+  /* ============================================
+     HERO DESKTOP
+  ============================================ */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 28px);
+    overflow: hidden;
+  }
+
+  /* Desktop icons */
+  .icons {
+    position: absolute;
+    top: 24px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    align-items: center;
+    z-index: 3;
+  }
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    width: 84px;
+    transition: transform 0.15s;
+  }
+  .icon:hover { transform: translateY(-2px); }
+  .icon:hover .icon-label {
+    background: var(--black);
+    color: #fff;
+  }
+
+  .icon-graphic { width: 56px; height: 48px; position: relative; }
+
+  .folder {
+    background: var(--accent);
+    border: 1.5px solid var(--black);
+    width: 100%; height: 100%;
+    position: relative;
+    box-shadow: var(--shadow-md);
+  }
+  .folder::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 0;
+    width: 45%; height: 8px;
+    background: inherit;
+    border: 1.5px solid var(--black);
+    border-bottom: none;
+  }
+  .folder.yellow { background: var(--yellow); }
+  .folder.cream { background: var(--cream); }
+  .folder.dark { background: #2E2E2E; }
+
+  .doc {
+    background: #fff;
+    border: 1.5px solid var(--black);
+    width: 80%; height: 100%;
+    margin-left: 10%;
+    position: relative;
+    box-shadow: var(--shadow-md);
+  }
+  .doc::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -1.5px;
+    width: 14px; height: 14px;
+    background: var(--desktop-bg);
+    border-left: 1.5px solid var(--black);
+    border-bottom: 1.5px solid var(--black);
+  }
+  .doc-lines {
+    position: absolute;
+    bottom: 8px; left: 8px; right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .doc-lines span { height: 2px; background: var(--black); }
+  .doc-lines span:nth-child(1) { width: 80%; }
+  .doc-lines span:nth-child(2) { width: 60%; }
+  .doc-lines span:nth-child(3) { width: 70%; }
+
+  .trash {
+    width: 44px; height: 48px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: var(--shadow-md);
+  }
+  .trash::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: -4px; right: -4px;
+    height: 6px;
+    background: #fff;
+    border: 1.5px solid var(--black);
+  }
+
+  .icon-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 1px 6px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .icon-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: -2px;
+  }
+  .icon:hover .icon-meta {
+    color: var(--black);
+  }
+
+  /* Hero main window */
+  .hero-window {
+    position: absolute;
+    top: 56px;
+    left: 60px;
+    width: 580px;
+    max-width: calc(100vw - 200px);
+    z-index: 2;
+  }
+  .hero-window::after {
+    content: '';
+    position: absolute;
+    inset: 34px 18px auto auto;
+    width: 90px;
+    height: 22px;
+    border: 1.5px solid var(--black);
+    background:
+      repeating-linear-gradient(90deg, var(--black) 0 6px, transparent 6px 10px),
+      #fff;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  /* Sticky note */
+  .sticky-note {
+    position: absolute;
+    top: 430px;
+    left: 720px;
+    width: 190px;
+    background: #FFE9A8;
+    padding: 16px 18px;
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-md);
+    transform: rotate(-3deg);
+    z-index: 1;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .sticky-note::before {
+    content: 'NOTE';
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+    color: #8B6F2A;
+  }
+
+  /* Corner clock */
+  .corner-clock {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    border: 1.5px solid var(--black);
+    padding: 8px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    box-shadow: var(--shadow-sm);
+    z-index: 5;
+  }
+  .corner-clock .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .corner-clock .row + .row {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed #999;
+  }
+  .corner-clock .row b { font-weight: 600; }
+
+  /* Status pill */
+  .status-pill {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--black);
+    color: #fff;
+    border: 1.5px solid var(--black);
+    padding: 8px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    box-shadow: 3px 3px 0 var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 5;
+  }
+  .status-pill .dot {
+    width: 8px; height: 8px;
+    background: #2D8F4E;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ============================================
+     WINDOW (reusable component)
+  ============================================ */
+  .window {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .window::before {
+    content: '';
+    position: absolute;
+    inset: 26px 0 auto;
+    height: 8px;
+    background: linear-gradient(180deg, rgba(10,9,8,0.08), transparent);
+    pointer-events: none;
+  }
+
+  .titlebar {
+    height: 26px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--black) 0px,
+      var(--black) 1.5px,
+      transparent 1.5px,
+      transparent 4px
+    );
+    border-bottom: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    position: relative;
+  }
+
+  .traffic { display: flex; gap: 6px; }
+  .traffic span {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    display: block;
+  }
+
+  .window-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 0 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .titlebar-right {
+    margin-left: auto;
+    background: #fff;
+    padding: 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .window-content { padding: 36px 40px 32px; }
+
+  /* Hero window content */
+  .index-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .index-label::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: var(--black);
+  }
+
+  .greeting {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .greeting em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .intro {
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .intro b {
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--accent);
+  }
+
+  .quick-start {
+    border-top: 1.5px solid var(--black);
+    padding-top: 18px;
+    position: relative;
+  }
+  .quick-start::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 78px;
+    height: 12px;
+    background: var(--yellow);
+    border: 1.5px solid var(--black);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+  .qs-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--muted);
+  }
+  .qs-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .qs-list a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 6px 8px;
+    margin-left: -8px;
+    transition: all 0.1s;
+  }
+  .qs-list a:hover { background: var(--black); color: #fff; }
+  .qs-list a::before { content: '▸'; font-size: 11px; }
+  .qs-list a b { font-weight: 600; color: var(--accent); }
+  .qs-list a:hover b { color: var(--yellow); }
+  .qs-list a span:last-child {
+    color: #777;
+    margin-left: auto;
+    font-size: 11px;
+  }
+  .qs-list a:hover span:last-child { color: #ccc; }
+
+  /* ============================================
+     PAGE SECTIONS
+  ============================================ */
+  .section {
+    padding: 100px 32px 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 74px;
+    left: 32px;
+    right: 32px;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--black), transparent);
+    opacity: 0.45;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-tag::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border: 1.5px solid var(--black);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .section-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+    background: rgba(255,255,255,0.55);
+    border: 1.5px solid var(--black);
+    padding: 8px 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ============================================
+     LIVE PROJECTS
+  ============================================ */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 28px;
+  }
+
+  .project-card {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.2), transparent 28%),
+      linear-gradient(0deg, rgba(10,9,8,0.05), transparent 22%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .project-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--black);
+  }
+  .project-card:hover::after { opacity: 1; }
+
+  .project-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px 8px 28px;
+    border-bottom: 1.5px solid var(--black);
+    background: var(--soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .project-titlebar::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border: 1.5px solid var(--black);
+  }
+  .project-id { font-weight: 600; }
+  .project-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #2D8F4E;
+    font-weight: 600;
+  }
+  .project-status.archived { color: var(--muted); }
+  .project-status .dot {
+    width: 6px; height: 6px;
+    background: #2D8F4E;
+    border-radius: 50%;
+  }
+  .project-status.archived .dot { background: var(--muted); }
+
+  .project-preview {
+    aspect-ratio: 16/10;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .project-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 18px 18px;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .project-preview.café { background: linear-gradient(135deg, #3A2920 0%, #1A0E08 100%); }
+  .project-preview.pos { background: linear-gradient(135deg, #1F2937 0%, #0F1419 100%); }
+  .project-preview.book { background: linear-gradient(135deg, #2D3E50 0%, #1A2530 100%); }
+  .project-preview.poker { background: linear-gradient(135deg, #1B3A2B 0%, #0A1F15 100%); }
+  .project-preview.quiz { background: linear-gradient(135deg, #2A1F3D 0%, #150F20 100%); }
+  .project-preview.qr { background: linear-gradient(135deg, #4B3427 0%, #1F140F 100%); }
+  .project-preview.runaway { background: linear-gradient(135deg, #25435A 0%, #101820 100%); }
+  .project-preview.archive { background: linear-gradient(135deg, #3F3648 0%, #17131D 100%); }
+
+  .preview-inner {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  .preview-inner .preview-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 12px;
+  }
+  .preview-inner .preview-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .preview-inner .preview-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .project-info {
+    padding: 20px 22px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .project-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border: 1px solid var(--black);
+    color: var(--black);
+  }
+
+  .project-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+  .btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 2px 2px 0 var(--black);
+  }
+  .btn:hover {
+    background: var(--black);
+    color: #fff;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--accent);
+  }
+  .btn.primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn.primary:hover { background: var(--black); }
+
+  .field-note-inline {
+    background: #FFE9A8;
+    border-top: 1.5px solid var(--black);
+    padding: 10px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #5C4A1A;
+    margin-top: auto;
+  }
+  .field-note-inline::before {
+    content: 'NOTE: ';
+    font-weight: 600;
+    color: #8B6F2A;
+  }
+
+  /* ============================================
+     DESIGN WORKS
+  ============================================ */
+  .design-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .design-card {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .design-card::before {
+    content: 'OPEN IMAGE';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+    padding: 3px 6px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    color: var(--black);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.18s;
+  }
+  .design-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--black);
+  }
+  .design-card:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .design-preview {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 18px;
+    background: var(--black);
+  }
+  .design-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 10px solid rgba(255,255,255,0.18);
+    pointer-events: none;
+  }
+  .design-preview.d1 { background: linear-gradient(135deg, #C9442C 0%, #7A2418 100%); }
+  .design-preview.d2 { background: linear-gradient(135deg, #2C3E50 0%, #1A2530 100%); }
+  .design-preview.d3 { background: linear-gradient(135deg, #F2C94C 0%, #B8902A 100%); color: #2A1F0A; }
+  .design-preview.d4 { background: linear-gradient(135deg, #1A1816 0%, #2E2E2E 100%); }
+  .design-preview.d5 { background: linear-gradient(135deg, #EDE6D3 0%, #B5B0A1 100%); color: #2A2A2A; }
+  .design-preview.d6 { background: linear-gradient(135deg, #5A2A4A 0%, #2A1525 100%); }
+  .design-preview.d7 { background: linear-gradient(135deg, #2D5A47 0%, #142A22 100%); }
+  .design-preview.d8 { background: linear-gradient(135deg, #B85A3C 0%, #6A2A18 100%); }
+
+  .design-preview h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .design-preview .dpn-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+  .design-preview.image-preview {
+    padding: 0;
+  }
+  .design-preview.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #f6f2e8;
+    transition: transform 0.28s;
+  }
+  .design-card:hover .design-preview.image-preview img {
+    transform: scale(1.025);
+  }
+  .design-preview.contain-preview img {
+    object-fit: contain;
+    background: #f6f2e8;
+  }
+  .design-preview .slide-img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: designSlide 6s infinite;
+  }
+  .design-preview .slide-img:nth-of-type(2) {
+    animation-delay: 3s;
+  }
+  .slide-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    padding: 3px 7px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    color: var(--black);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0;
+    animation: countSlide 6s infinite;
+  }
+  .slide-count.second {
+    animation-delay: 3s;
+  }
+  @keyframes designSlide {
+    0%, 45% { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes countSlide {
+    0%, 45% { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 34px;
+    background: rgba(10, 9, 8, 0.78);
+  }
+  .image-modal.open {
+    display: flex;
+  }
+  .image-modal-window {
+    width: min(1120px, 100%);
+    max-height: calc(100vh - 68px);
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+  }
+  .image-modal-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-bottom: 1.5px solid var(--black);
+    background: var(--soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .image-modal-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+  .image-modal-count {
+    color: var(--muted);
+  }
+  .image-modal-close {
+    width: 26px;
+    height: 24px;
+    border: 1.5px solid var(--black);
+    background: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .image-modal-close:hover {
+    background: var(--black);
+    color: #fff;
+  }
+  .image-modal-body {
+    position: relative;
+    min-height: 260px;
+    height: min(78vh, 780px);
+    background: #f6f2e8;
+  }
+  .image-modal-body img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+  }
+  .image-modal-body img.active {
+    opacity: 1;
+  }
+  @media (max-width: 700px) {
+    .image-modal {
+      padding: 14px;
+    }
+    .image-modal-window {
+      max-height: calc(100vh - 28px);
+    }
+    .image-modal-body {
+      height: 74vh;
+    }
+  }
+
+  .design-info {
+    padding: 12px 14px;
+    border-top: 1.5px solid var(--black);
+    background: #fff;
+  }
+  .design-info .dn {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .design-info .dt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============================================
+     STACK
+  ============================================ */
+  .stack-window {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-lg);
+  }
+  .stack-content {
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 36px;
+  }
+
+  .stack-group {
+    border-left: 2px solid var(--black);
+    padding-left: 16px;
+  }
+  .stack-group .sg-cat {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .stack-group h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .stack-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stack-list li {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .stack-list li b {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .stack-list li span {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     ABOUT
+  ============================================ */
+  .about-window { background: var(--window-bg); border: 1.5px solid var(--black); box-shadow: var(--shadow-lg); }
+
+  .about-content {
+    padding: 50px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+
+  .about-left h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+  .about-left h2 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .about-left p {
+    font-size: 14.5px;
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .about-left p b {
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--accent);
+  }
+
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .approach-card {
+    background: var(--soft);
+    border: 1.5px solid var(--black);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .approach-card .ac-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .approach-card h4 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .approach-card p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #333;
+    font-weight: 300;
+  }
+
+  /* ============================================
+     CONTACT
+  ============================================ */
+  .contact-window {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-lg);
+  }
+  .contact-content {
+    padding: 50px 40px;
+    text-align: center;
+  }
+  .contact-content h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .contact-content h2 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .contact-content > p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .contact-btn {
+    background: var(--window-bg);
+    border: 1.5px solid var(--black);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 18px;
+    text-align: left;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: block;
+  }
+  .contact-btn:hover {
+    background: var(--black);
+    color: #fff;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--accent);
+  }
+  .contact-btn .cb-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .contact-btn:hover .cb-label { color: var(--yellow); }
+  .contact-btn .cb-value {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* ============================================
+     FOOTER
+  ============================================ */
+  .footer {
+    background: var(--black);
+    color: #fff;
+    padding: 20px 32px 16px;
+    border-top: 1.5px solid var(--black);
+    margin-top: 48px;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .footer-logo {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .footer-logo em { font-style: normal; color: var(--accent); }
+  .footer-meta {
+    color: rgba(255,255,255,0.6);
+    line-height: 1.45;
+    text-align: right;
+  }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 900px) {
+    .menubar-items { display: none; }
+    .hero-window {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: calc(100vw - 32px);
+      max-width: none;
+      margin: 24px auto;
+    }
+    .icons {
+      position: relative;
+      top: auto;
+      right: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 16px;
+      margin-top: 30px;
+      gap: 18px;
+    }
+    .icon { width: 72px; }
+    .icon-graphic { width: 44px; height: 38px; }
+    .sticky-note {
+      position: relative;
+      left: auto; top: auto;
+      width: calc(100vw - 56px);
+      max-width: 280px;
+      margin: 18px auto 30px;
+      transform: rotate(-2deg);
+    }
+    .corner-clock, .status-pill {
+      position: relative;
+      bottom: auto; left: auto; right: auto;
+      margin: 20px 16px;
+      display: inline-flex;
+    }
+    .greeting { font-size: 36px; }
+    .section-title { font-size: 36px; }
+    .about-content {
+      grid-template-columns: 1fr;
+      padding: 36px 28px;
+    }
+    .window-content, .stack-content {
+      padding: 28px 24px;
+    }
+    .contact-content h2 { font-size: 36px; }
+    .section { padding: 60px 16px 40px; }
+    .section::before {
+      top: 42px;
+      left: 16px;
+      right: 16px;
+    }
+    .section-meta {
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================ MENU BAR ============================================ -->
+<div class="menubar">
+  <span class="menubar-logo">JIHYUN.OS</span>
+  <div class="menubar-items">
+    <a href="#projects">Projects</a>
+    <a href="#design">Design</a>
+    <a href="#stack">Stack</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="menubar-right">
+    <span class="battery-dots"><i></i><i></i><i></i><i></i></span>
+    <span id="clock">Mon 14:47</span>
+  </div>
+</div>
+
+<!-- ============================================ HERO ============================================ -->
+<section class="hero">
+
+  <!-- Desktop icons -->
+  <div class="icons">
+    <a href="#projects" class="icon">
+      <div class="icon-graphic"><div class="folder"></div></div>
+      <div class="icon-label">Live<br>Projects</div>
+      <div class="icon-meta">7 items</div>
+    </a>
+    <a href="#design" class="icon">
+      <div class="icon-graphic"><div class="folder yellow"></div></div>
+      <div class="icon-label">Design<br>Works</div>
+      <div class="icon-meta">13 items</div>
+    </a>
+    <a href="#stack" class="icon">
+      <div class="icon-graphic"><div class="folder cream"></div></div>
+      <div class="icon-label">Stack</div>
+      <div class="icon-meta">system</div>
+    </a>
+    <a href="#about" class="icon">
+      <div class="icon-graphic">
+        <div class="doc"><div class="doc-lines"><span></span><span></span><span></span></div></div>
+      </div>
+      <div class="icon-label">About.me</div>
+    </a>
+    <a href="#contact" class="icon">
+      <div class="icon-graphic"><div class="trash"></div></div>
+      <div class="icon-label">Contact</div>
+    </a>
+  </div>
+
+  <!-- Sticky note -->
+  <div class="sticky-note">
+    더블클릭으로<br>
+    폴더 열기.<br><br>
+    Live Projects부터<br>
+    보는 거 추천.
+  </div>
+
+  <!-- Hero window -->
+  <div class="hero-window window">
+    <div class="titlebar">
+      <div class="traffic"><span></span><span></span><span></span></div>
+      <div class="window-title">README.txt</div>
+    </div>
+    <div class="window-content">
+      <div class="index-label"><span>INDEX / 2026 EDITION</span></div>
+      <h1 class="greeting">
+        만든다.<br>
+        배포한다.<br>
+        <em>기록한다.</em>
+      </h1>
+      <p class="intro">
+        <b>이지현</b>의 작업실에 오신 걸 환영합니다.<br>
+        화면을 기획하고, 디자인하고, 코드로 직접 구현합니다.
+        모든 폴더 안에는 실제로 배포되어 작동중인 웹들이 들어있습니다.
+      </p>
+      <div class="quick-start">
+        <div class="qs-label">Quick Start</div>
+        <ul class="qs-list">
+          <li><a href="#projects">Live <b>Projects</b> — 배포된 웹앱 7개 <span>7 items</span></a></li>
+          <li><a href="#design">Design <b>Works</b> — Figma · Photoshop <span>13 items</span></a></li>
+          <li><a href="#stack"><b>Stack</b> — 사용 기술 인벤토리 <span>system</span></a></li>
+          <li><a href="#about"><b>About</b>.me — 작업 방식 / 연락처 <span>open</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Corner clock -->
+  <div class="corner-clock">
+    <div class="row"><span>SYSTEM</span><b>JIHYUN.OS v1.0</b></div>
+    <div class="row"><span>UPTIME</span><b>since 2024</b></div>
+    <div class="row"><span>DISK</span><b>7 live / 13 design</b></div>
+  </div>
+
+  <!-- Status pill -->
+  <div class="status-pill">
+    <span class="dot"></span>
+    <span>7 SERVERS RUNNING</span>
+  </div>
+</section>
+
+<!-- ============================================ LIVE PROJECTS ============================================ -->
+<section class="section" id="projects">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">/folder/live-projects</div>
+      <h2 class="section-title">Live <em>Projects</em></h2>
+    </div>
+    <div class="section-meta">
+      7 specimens currently running<br>
+      Last updated: 2026.05.15
+    </div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- LAB-001 Table Order -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-001 / Featured</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview café">
+        <div class="preview-inner">
+          <div class="preview-label">ORDER · MENU · CART</div>
+          <div class="preview-title">theVenti Café<br>Table Order</div>
+          <div class="preview-sub">scan → order → pay</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">테이블 오더 시스템</h3>
+        <p class="project-desc">
+          사용자가 QR로 메뉴를 보고 옵션·수량을 선택해 주문하면,
+          관리자 POS에서 실시간으로 받아 처리하는 카페 주문 웹앱.
+        </p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">LocalStorage</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Admin UI</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://aass209.dothome.co.kr/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">처음으로 LocalStorage로 상태 동기화 구현. POS 흐름 짜는 데 3일 걸림.</div>
+    </article>
+
+    <!-- LAB-002 BookScan -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-002</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview book">
+        <div class="preview-inner">
+          <div class="preview-label">OCR · SEARCH · ARCHIVE</div>
+          <div class="preview-title">BookScan<br>Reader</div>
+          <div class="preview-sub">scan books, search inside</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">책 스캔 · 검색 웹앱</h3>
+        <p class="project-desc">
+          책 페이지를 찍으면 OCR로 텍스트를 뽑아내고,
+          의미 기반으로 검색할 수 있게 만든 개인 아카이브.
+        </p>
+        <div class="project-tags">
+          <span class="tag">OCR</span>
+          <span class="tag">Semantic Search</span>
+          <span class="tag">Render.com</span>
+          <span class="tag">LocalStorage</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://bookscan-1.onrender.com/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">Render.com 배포 처음 해본 작업. 콜드스타트 이슈 처리.</div>
+    </article>
+
+    <!-- LAB-003 Hold'em -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-003</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview poker">
+        <div class="preview-inner">
+          <div class="preview-label">MULTIPLAYER · WEBSOCKET</div>
+          <div class="preview-title">Texas Hold'em<br>Online</div>
+          <div class="preview-sub">solo + multiplayer table</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">홀덤 포커</h3>
+        <p class="project-desc">
+          핸드 판정 엔진부터 베팅 흐름까지 직접 구현.
+          WebSocket으로 멀티플레이 테이블까지 동작.
+        </p>
+        <div class="project-tags">
+          <span class="tag">WebSocket</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Game Logic</span>
+          <span class="tag">Render.com</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://holdem-server.onrender.com/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">베팅 흐름 디버깅이 제일 어려웠음. 사이드팟 계산도 직접 짬.</div>
+    </article>
+
+    <!-- LAB-004 Psychology -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-004</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview quiz">
+        <div class="preview-inner">
+          <div class="preview-label">QUIZ · DARK · BAROQUE</div>
+          <div class="preview-title">당신은 어떤<br>인간인가</div>
+          <div class="preview-sub">4 types of fool</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">다크 심리테스트</h3>
+        <p class="project-desc">
+          진단형 심리테스트. Black Han Sans 기반 강한 타이포 디자인 + 4가지 "바보 유형" 결과.
+        </p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">Typography</span>
+          <span class="tag">Content Design</span>
+          <span class="tag">Shareable</span>
+        </div>
+        <div class="project-actions">
+          <a href="#" class="btn primary">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">디자인 톤부터 결과 카피까지 다 직접. 시니컬한 톤이 키.</div>
+    </article>
+
+    <!-- LAB-005 QR Menu Standard -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-005</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview qr">
+        <div class="preview-inner">
+          <div class="preview-label">QR MENU · ORDER · COPY</div>
+          <div class="preview-title">On The Table<br>QR Menu</div>
+          <div class="preview-sub">menu selection + order summary</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">온더테이블 QR 메뉴판</h3>
+        <p class="project-desc">
+          테이블에서 메뉴를 보고 옵션을 선택한 뒤 주문 내용을 복사해 전달할 수 있는 QR 기반 메뉴판.
+        </p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">QR Menu</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Render.com</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://qr-menu-standard.onrender.com/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">QR 주문 흐름을 메뉴 탐색부터 주문 요약까지 한 화면에서 끝나도록 구성.</div>
+    </article>
+
+    <!-- LAB-006 Run Away and Learn to Live -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-006</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview runaway">
+        <div class="preview-inner">
+          <div class="preview-label">LIFE GAME · CHOICE · ENDING</div>
+          <div class="preview-title">도망쳐,<br>그리고 살아가다</div>
+          <div class="preview-sub">a life journey game</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">도망쳐, 그리고 살아가다</h3>
+        <p class="project-desc">
+          떠나는 선택 이후 돈, 체력, 행복, 정착 수치를 관리하며 여러 엔딩으로 이어지는 라이프 저니 게임.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Game</span>
+          <span class="tag">Scenario</span>
+          <span class="tag">State UI</span>
+          <span class="tag">Render.com</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://run-away-and-learn-to-live.onrender.com/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">선택지와 자원 변화가 엔딩으로 이어지도록 구성한 스토리 기반 웹 게임.</div>
+    </article>
+
+    <!-- LAB-007 Life Archive -->
+    <article class="project-card">
+      <div class="project-titlebar">
+        <span class="project-id">LAB-007</span>
+        <span class="project-status"><span class="dot"></span>LIVE</span>
+      </div>
+      <div class="project-preview archive">
+        <div class="preview-inner">
+          <div class="preview-label">LOCK · MEMORY · ARCHIVE</div>
+          <div class="preview-title">Life<br>Archive</div>
+          <div class="preview-sub">locked personal archive</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <h3 class="project-name">Life Archive</h3>
+        <p class="project-desc">
+          잠금 화면을 시작점으로 개인의 기록과 기억을 보관하는 아카이브형 웹 프로젝트.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Archive</span>
+          <span class="tag">Lock Screen</span>
+          <span class="tag">Personal UI</span>
+          <span class="tag">Render.com</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://life-archive.onrender.com/lock.html" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site ↗</a>
+          <a href="https://github.com/jxding-dev" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="field-note-inline">기록을 열기 전 잠금 경험부터 분위기를 잡는 개인 아카이브 프로젝트.</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================ DESIGN WORKS ============================================ -->
+<section class="section" id="design">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">/folder/design-works</div>
+      <h2 class="section-title">Design <em>Works</em></h2>
+    </div>
+    <div class="section-meta">
+      13 visual works · JPG archive<br>
+      Photoshop · AI Image · Poster · Banner
+    </div>
+  </div>
+
+  <div class="design-grid">
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/event-banner-01.jpg" alt="Event banner design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Event Banner</div>
+        <div class="dt">DSG-001 · Banner Design</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/beauty-banner.jpg" alt="Beauty banner design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Beauty Banner</div>
+        <div class="dt">DSG-002 · Web Banner</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/blueberry.jpg" alt="Blueberry visual design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Blueberry Visual</div>
+        <div class="dt">DSG-003 · Product Visual</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/cappuccino.jpg" alt="Cappuccino visual design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Cappuccino Visual</div>
+        <div class="dt">DSG-004 · Product Visual</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/ai-generated-ice-cream.jpg" alt="AI generated ice cream visual">
+      </div>
+      <div class="design-info">
+        <div class="dn">AI Ice Cream Visual</div>
+        <div class="dt">DSG-005 · AI Image</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/ai-generated-line-portrait-poster.jpg" alt="AI generated line portrait poster">
+      </div>
+      <div class="design-info">
+        <div class="dn">AI Line Portrait Poster</div>
+        <div class="dt">DSG-006 · Poster</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/seagull.jpg" alt="Seagull visual design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Seagull Visual</div>
+        <div class="dt">DSG-007 · Composite</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/performance-poster.jpg" alt="Performance poster design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Performance Poster</div>
+        <div class="dt">DSG-008 · Poster</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/orchestra-poster.jpg" alt="Orchestra poster design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Orchestra Poster</div>
+        <div class="dt">DSG-009 · Poster</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview contain-preview">
+        <img src="web-content-design-jpg/emblem.jpg" alt="Emblem design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Emblem</div>
+        <div class="dt">DSG-010 · Logo Mark</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/memory-theft-composite-poster.jpg" alt="Memory theft composite poster">
+      </div>
+      <div class="design-info">
+        <div class="dn">Memory Theft Poster</div>
+        <div class="dt">DSG-011 · Composite Poster</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <span class="slide-count">1/2</span>
+        <span class="slide-count second">2/2</span>
+        <img class="slide-img" src="web-content-design-jpg/farm-direct-banner.jpg" alt="Farm direct banner version 1">
+        <img class="slide-img" src="web-content-design-jpg/farm-direct-banner-02.jpg" alt="Farm direct banner version 2">
+      </div>
+      <div class="design-info">
+        <div class="dn">Farm Direct Banner</div>
+        <div class="dt">DSG-012 · 2 Versions · Auto Slide</div>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <div class="design-preview image-preview">
+        <img src="web-content-design-jpg/floating-banner-01.jpg" alt="Floating banner design">
+      </div>
+      <div class="design-info">
+        <div class="dn">Floating Banner</div>
+        <div class="dt">DSG-013 · Web Banner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="image-modal" id="imageModal" aria-hidden="true">
+  <div class="image-modal-window" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+    <div class="image-modal-bar">
+      <div class="image-modal-title" id="imageModalTitle">Design Preview</div>
+      <div class="image-modal-count" id="imageModalCount">1/1</div>
+      <button class="image-modal-close" type="button" aria-label="Close image preview">×</button>
+    </div>
+    <div class="image-modal-body" id="imageModalBody"></div>
+  </div>
+</div>
+
+<!-- ============================================ STACK ============================================ -->
+<section class="section" id="stack">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">/system/info</div>
+      <h2 class="section-title">Stack <em>Inventory</em></h2>
+    </div>
+    <div class="section-meta">
+      tools / frameworks / services<br>
+      JIHYUN.OS v1.0
+    </div>
+  </div>
+
+  <div class="stack-window">
+    <div class="titlebar">
+      <div class="traffic"><span></span><span></span><span></span></div>
+      <div class="window-title">system_info.txt</div>
+    </div>
+    <div class="stack-content">
+
+      <div class="stack-group">
+        <div class="sg-cat">01 / Markup & Styling</div>
+        <h3>Layout & UI</h3>
+        <ul class="stack-list">
+          <li><b>HTML / CSS</b><span>시멘틱 마크업, 반응형 레이아웃, Grid · Flex 구성</span></li>
+          <li><b>Tailwind</b><span>유틸리티 클래스 기반 스타일링 익숙함</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="sg-cat">02 / Frontend</div>
+        <h3>JavaScript</h3>
+        <ul class="stack-list">
+          <li><b>Vanilla JS</b><span>DOM 조작, 이벤트 처리, 필터링, 모달, 장바구니 등 인터랙션 로직</span></li>
+          <li><b>LocalStorage / Fetch API</b><span>상태 저장, 비동기 데이터 처리</span></li>
+          <li><b>React</b><span>학습 중 (Vite 환경, 컴포넌트 분리)</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="sg-cat">03 / Design</div>
+        <h3>Visual Tools</h3>
+        <ul class="stack-list">
+          <li><b>Figma</b><span>UI 시안, 컴포넌트 시스템, 프로토타이핑</span></li>
+          <li><b>Photoshop</b><span>비주얼 합성, 배너, 상세페이지</span></li>
+          <li><b>Illustrator</b><span>로고, 아이콘, 벡터 그래픽</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="sg-cat">04 / Backend Practice</div>
+        <h3>Server-side</h3>
+        <ul class="stack-list">
+          <li><b>Node.js / Express</b><span>REST API, WebSocket 서버 (홀덤 멀티플레이)</span></li>
+          <li><b>MySQL</b><span>스키마 설계, 기본 CRUD 쿼리</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="sg-cat">05 / Deployment</div>
+        <h3>Hosting</h3>
+        <ul class="stack-list">
+          <li><b>Render.com</b><span>Node 서버 + 정적 사이트 배포</span></li>
+          <li><b>Dothome (닷홈)</b><span>국내 호스팅, FTP 업로드</span></li>
+          <li><b>GitHub</b><span>버전 관리, Pages 정적 배포</span></li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="sg-cat">06 / Working With</div>
+        <h3>AI · Etc</h3>
+        <ul class="stack-list">
+          <li><b>Anthropic API</b><span>개인 챗봇, 컨텐츠 생성 자동화</span></li>
+          <li><b>MCP</b><span>Figma · 외부 도구 연결</span></li>
+          <li><b>Git</b><span>브랜치, 커밋 관리</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ ABOUT ============================================ -->
+<section class="section" id="about">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">/document/about.me</div>
+      <h2 class="section-title">About <em>Me</em></h2>
+    </div>
+    <div class="section-meta">
+      작업 방식 · 태도<br>
+      Last edit: 2026.05
+    </div>
+  </div>
+
+  <div class="about-window">
+    <div class="titlebar">
+      <div class="traffic"><span></span><span></span><span></span></div>
+      <div class="window-title">About.me</div>
+    </div>
+    <div class="about-content">
+      <div class="about-left">
+        <h2>화면 그 자체보다,<br>흐름을 설계하는 일을 <em>좋아합니다.</em></h2>
+        <p>
+          <b>이지현</b>입니다. 프론트엔드 개발과 디자인을 함께 다룹니다.
+          시안만 그리거나 코드만 짜는 게 아니라,
+          처음 기획 단계부터 화면에 어떤 정보가 어떤 순서로 노출될지,
+          사용자가 어떤 흐름으로 행동하게 될지를 직접 설계하고 끝까지 구현합니다.
+        </p>
+        <p>
+          작은 인터랙션 하나를 정리하는 일에도 시간을 들이는 편입니다.
+          정적인 페이지부터 데이터 기반 웹앱, 멀티플레이 서버까지
+          작업 범위를 한 칸씩 넓혀가는 중입니다.
+        </p>
+      </div>
+
+      <div class="about-right">
+        <div class="approach-card">
+          <div class="ac-num">METHOD 01</div>
+          <h4>Design Sense</h4>
+          <p>시각적 분위기와 정보의 위계, 두 가지를 동시에 본다. 흔한 템플릿보다 톤이 분명한 화면을 선호한다.</p>
+        </div>
+        <div class="approach-card">
+          <div class="ac-num">METHOD 02</div>
+          <h4>Hands-on Build</h4>
+          <p>디자인만 던지지 않는다. HTML/CSS/JavaScript로 직접 구현하고 배포까지 끝낸다.</p>
+        </div>
+        <div class="approach-card">
+          <div class="ac-num">METHOD 03</div>
+          <h4>Flow Thinking</h4>
+          <p>사용자가 어떤 순서로 무엇을 보고 어디서 멈출지를 먼저 그린다. 화면은 그 다음에 입혀진다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ CONTACT ============================================ -->
+<section class="section" id="contact">
+  <div class="contact-window">
+    <div class="titlebar">
+      <div class="traffic"><span></span><span></span><span></span></div>
+      <div class="window-title">contact.app</div>
+    </div>
+    <div class="contact-content">
+      <h2>같이 만들 일이 있으면<br><em>연락 주세요.</em></h2>
+      <p>프로젝트 의뢰 / 협업 / 질문 전부 환영합니다.</p>
+
+      <div class="contact-grid">
+        <a href="mailto:dlwlgus2209@gmail.com" class="contact-btn">
+          <div class="cb-label">EMAIL</div>
+          <div class="cb-value">dlwlgus2209@<br>gmail.com</div>
+        </a>
+        <a href="https://github.com/jxding-dev" class="contact-btn" target="_blank" rel="noopener noreferrer">
+          <div class="cb-label">GITHUB</div>
+          <div class="cb-value">github.com/<br>jxding-dev</div>
+        </a>
+        <a href="#" class="contact-btn">
+          <div class="cb-label">PORTFOLIO</div>
+          <div class="cb-value">PDF<br>Download ↓</div>
+        </a>
+        <a href="#" class="contact-btn">
+          <div class="cb-label">FIGMA</div>
+          <div class="cb-value">Design<br>Preview ↗</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ FOOTER ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">JIHYUN<em>.</em>OS</div>
+    <div class="footer-meta">
+      © 2026 이지현. All rights reserved.<br>
+      Made with HTML · CSS · JavaScript.<br>
+      No frameworks. No bullshit.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Real-time clock
+  function updateClock(){
+    const d = new Date();
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const h = String(d.getHours()).padStart(2,'0');
+    const m = String(d.getMinutes()).padStart(2,'0');
+    document.getElementById('clock').textContent = `${days[d.getDay()]} ${h}:${m}`;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  const imageModal = document.getElementById('imageModal');
+  const imageModalBody = document.getElementById('imageModalBody');
+  const imageModalTitle = document.getElementById('imageModalTitle');
+  const imageModalCount = document.getElementById('imageModalCount');
+  const imageModalClose = imageModal.querySelector('.image-modal-close');
+  let modalSlideTimer = null;
+
+  function stopModalSlide(){
+    if (modalSlideTimer) {
+      clearInterval(modalSlideTimer);
+      modalSlideTimer = null;
+    }
+  }
+
+  function showModalSlide(index, total){
+    imageModalBody.querySelectorAll('img').forEach((img, imgIndex) => {
+      img.classList.toggle('active', imgIndex === index);
+    });
+    imageModalCount.textContent = `${index + 1}/${total}`;
+  }
+
+  function closeImageModal(){
+    stopModalSlide();
+    imageModal.classList.remove('open');
+    imageModal.setAttribute('aria-hidden', 'true');
+    imageModalBody.innerHTML = '';
+  }
+
+  document.querySelectorAll('.design-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const images = Array.from(card.querySelectorAll('.design-preview img')).map((img) => ({
+        src: img.getAttribute('src'),
+        alt: img.getAttribute('alt') || ''
+      }));
+      if (!images.length) return;
+
+      const title = card.querySelector('.dn')?.textContent?.trim() || 'Design Preview';
+      stopModalSlide();
+      imageModalTitle.textContent = title;
+      imageModalBody.innerHTML = images
+        .map((img, index) => `<img src="${img.src}" alt="${img.alt}" class="${index === 0 ? 'active' : ''}">`)
+        .join('');
+      imageModal.classList.add('open');
+      imageModal.setAttribute('aria-hidden', 'false');
+      showModalSlide(0, images.length);
+
+      if (images.length > 1) {
+        let currentIndex = 0;
+        modalSlideTimer = setInterval(() => {
+          currentIndex = (currentIndex + 1) % images.length;
+          showModalSlide(currentIndex, images.length);
+        }, 3000);
+      }
+    });
+  });
+
+  imageModalClose.addEventListener('click', closeImageModal);
+  imageModal.addEventListener('click', (event) => {
+    if (event.target === imageModal) closeImageModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && imageModal.classList.contains('open')) closeImageModal();
+  });
+</script>
+
+</body>
+</html>
