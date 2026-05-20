@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: portfolio
+    runtime: static
+    buildCommand: mkdir -p public && cp index.html public/index.html && cp -r web-content-design-jpg public/web-content-design-jpg
+    staticPublishPath: ./public
+    autoDeployTrigger: commit
