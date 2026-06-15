@@ -297,6 +297,15 @@ section { scroll-margin-top: var(--hd-h); }
     animation: fadeUp .7s cubic-bezier(.22,1,.36,1) .95s forwards;
 }
 
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+    opacity: 0;
+    animation: fadeUp .7s cubic-bezier(.22,1,.36,1) 1.08s forwards;
+}
+
 .hero-tags {
     display: flex;
     flex-wrap: wrap;
