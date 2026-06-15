@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>살까 말까 고민하지 마 · 상품 상세</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/shop_detail.css">
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <p class="i-box">
+                <button><img src="images/icon/mean/menu-sliders-heart.png" alt="전체메뉴"></button>
+            </p>
+
+            <h1 class="logo">
+                <a href="shop-list.html"><img src="images/icon/mean/error-logo.png" alt="로고"></a>
+            </h1>
+
+            <p class="i-box">
+                <button><img src="images/icon/mean/search-clock.png" alt="검색"></button>
+                <button><img src="images/icon/mean/shopping-bag-heart.png" alt="장바구니"></button>
+            </p>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="product-detail">
+            <div class="product-image-wrap">
+                <ul class="banner">
+                    <li style="background-color: #ddd;"><img src="images/pd-detail-05.jpg" alt="상품 이미지 1"></li>
+                    <li style="background-color: #ddd;"><img src="images/pd-detail-06.jpg" alt="상품 이미지 2"></li>
+                    <li style="background-color: #ddd;"><img src="images/pd-detail-07.jpg" alt="상품 이미지 3"></li>
+                    <li style="background-color: #ddd;"><img src="images/pd-detail-08.jpg" alt="상품 이미지 4"></li>
+                    <li style="background-color: #ddd;"><img src="images/pd-detail-09.jpg" alt="상품 이미지 5"></li>
+                </ul>
+
+                <div class="indicator">
+                    <button class="on">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                </div>
+            </div>
+
+            <div class="product-header">
+                <p class="product-name">[기본] 코튼 맨투맨</p>
+
+                <a href="#" class="icon-btn i-box">
+                    <img src="images/icon/mean/share-hearts.png" alt="공유">
+                </a>
+
+                <a href="#" class="icon-btn i-box">
+                    <img src="images/icon/mean/heart-filled.png" alt="찜">
+                </a>
+            </div>
+        </section>
+
+        <div class="price-row">
+            <span class="discount-rate">18%</span>
+            <span class="price-original">24,000원</span>
+            <span class="price-sale">19,800원</span>
+        </div>
+
+        <dl class="option-sel option-color">
+            <dt class="option-title">색상</dt>
+            <dd class="option-list">
+                <button class="option-btn" data-color="아이보리" style="background:#e2e2e2;"></button>
+                <button class="option-btn" data-color="라이트그레이" style="background:#acacac;"></button>
+                <button class="option-btn" data-color="멜란지그레이" style="background:#999;"></button>
+                <button class="option-btn" data-color="차콜블랙" style="background:rgb(29, 29, 29);"></button>
+            </dd>
+        </dl>
+
+        <dl class="option-sel option-size">
+            <dt class="option-title">사이즈</dt>
+            <dd class="option-list">
+                <button class="option-btn">S</button>
+                <button class="option-btn">M</button>
+                <button class="option-btn">L</button>
+                <button class="option-btn">XL</button>
+            </dd>
+        </dl>
+
+        <dl class="option-sel option-quantity">
+            <dt class="option-title">수량</dt>
+            <dd class="quantity-control i-func">
+                <button class="quantity-btn minus">
+                    <img src="images/icon/mean/minus-square.png" alt="감소">
+                </button>
+                <span class="quantity-value">1</span>
+                <button class="quantity-btn plus">
+                    <img src="images/icon/mean/plus-square.png" alt="증가">
+                </button>
+            </dd>
+        </dl>
+
+        <div class="selected-option">
+            <div class="selected-option-info">
+                <span class="option-label">색상:</span>
+                <span class="option-value option-color"></span>
+                <span class="option-label">사이즈:</span>
+                <span class="option-value option-size">M</span>
+                <span class="option-label">수량:</span>
+                <span class="option-value option-quantity">1</span>
+            </div>
+
+            <div class="selected-option-actions">
+                <button type="button" class="option-reset">옵션해제</button>
+            </div>
+        </div>
+
+        <div class="buy-bar">
+            <button type="button" class="btn-outline">장바구니</button><button type="button" class="btn-solid">구매하기</button>
+        </div>
+
+        <section class="detail-sec">
+            <ul class="tab-menu">
+                <li class="on"><button>상세</button></li>
+                <li><button>리뷰</button></li>
+                <li><button>문의</button></li>
+                <li><button>관련상품</button></li>
+            </ul>
+
+            <div class="cont-wrap">
+                <div class="cont detail-cuts">
+                    <img src="images/pd-detail-10.jpg" alt="상품 상세 이미지 1">
+                </div>
+
+                <div class="app-container">
+                    <div class="header">
+                        <img class="back-btn" src="images/icon/mean/arrow-left.png" alt="뒤로가기">
+                        <div class="header-title">리뷰 3,987</div>
+                        <button class="write-btn">리뷰쓰기</button>
+                    </div>
+
+                    <div class="summary-section">
+                        <div class="score-box">
+                            <div class="star-icon">★</div>
+                            <div class="score-text">만족도 4.2</div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="chart-box">
+                            <div class="chart-row"><span class="chart-label">5점</span><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div></div>
+                            <div class="chart-row"><span class="chart-label">4점</span><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div></div>
+                            <div class="chart-row"><span class="chart-label">3점</span><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div></div>
+                            <div class="chart-row"><span class="chart-label">2점</span><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div></div>
+                            <div class="chart-row"><span class="chart-label">1점</span><div class="chart-bar-bg"><div class="chart-bar-fill"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <div class="filter-left">
+                            <div class="dropdown">
+                                <button class="filter-btn" id="height-btn">키 ▼</button>
+                                <ul class="dropdown-list" id="height-list"></ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="filter-btn" id="weight-btn">몸무게 ▼</button>
+                                <ul class="dropdown-list" id="weight-list"></ul>
+                            </div>
+                        </div>
+                        <div class="filter-right">
+                            <button class="filter-btn" id="my-body-btn">내 체형 보기</button>
+                        </div>
+                    </div>
+
+                    <div class="review-list">
+                        <div class="review-item">
+                            <div class="review-top">
+                                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=120&h=120&fit=crop" alt="리뷰 이미지" class="review-img">
+                                <div class="review-info">
+                                    <div class="product-name">[기본] 코튼 맨투맨 아이보리/M</div>
+                                    <div class="user-spec">몸무게 45kg 사이즈 S</div>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <div class="review-text">
+                                핏이 너무 예쁘고 실제로 입었을 때 마음에 들어요. 원단도 적당해서 자주 입기 좋습니다.
+                                <span class="read-more">더보기</span>
+                            </div>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-top">
+                                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=120&h=120&fit=crop" alt="리뷰 이미지" class="review-img">
+                                <div class="review-info">
+                                    <div class="product-name">[기본] 코튼 맨투맨 아이보리/M</div>
+                                    <div class="user-spec">몸무게 45kg 사이즈 S</div>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <div class="review-text">
+                                깔끔한 기본 아이템이라 여러 코디에 잘 어울립니다. 배송도 빠르고 만족합니다.
+                                <span class="read-more">더보기</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inquiry-wrapper">
+                    <header class="inq-topbar">
+                        <img class="back-btn" src="images/icon/mean/arrow-left.png" alt="뒤로가기">
+                        <div class="inq-page-title">문의</div>
+                        <div class="inq-spacer"></div>
+                    </header>
+
+                    <main class="inq-body-area">
+                        <div class="inq-field-group">
+                            <label class="inq-field-label" for="inq-title">제목</label>
+                            <input type="text" id="inq-title" name="inq-title" class="inq-text-input" placeholder="상품 문의 제목을 입력해주세요.">
+                        </div>
+
+                        <div class="inq-field-group">
+                            <div class="inq-field-label">문의 유형</div>
+                            <div class="inq-category-list">
+                                <button class="inq-category-btn">배송</button>
+                                <button class="inq-category-btn">사이즈</button>
+                                <button class="inq-category-btn">상품</button>
+                                <button class="inq-category-btn">교환/반품</button>
+                                <button class="inq-category-btn">주문/결제</button>
+                            </div>
+                        </div>
+
+                        <div class="inq-field-group">
+                            <label class="inq-field-label" for="inq-content">문의 내용</label>
+                            <textarea id="inq-content" name="inq-content" class="inq-text-area" placeholder="궁금한 내용을 자세히 입력해주세요.&#10;예) 사이즈, 색상, 착용감, 재입고 여부 등"></textarea>
+                        </div>
+
+                        <label class="inq-attach-wrapper" for="file-upload">
+                            <div class="inq-attach-plus">+</div>
+                            <div class="inq-attach-label">첨부파일</div>
+                            <input type="file" id="file-upload" name="inq-files" class="inq-file-input" multiple>
+                        </label>
+
+                        <div id="file-display-container" class="inq-file-display" style="display: none;">
+                            <span id="file-name-text" class="inq-file-name-text"></span>
+                            <button type="button" id="file-delete-btn" class="inq-file-delete-btn">
+                                <img src="images/icon/mean/close-square.png" alt="삭제" class="inq-delete-icon">
+                            </button>
+                        </div>
+
+                        <div id="file-name-display" class="inq-file-name"></div>
+
+                        <label class="inq-secret-wrap">
+                            <input type="checkbox" id="inq-secret" name="inq-secret" class="inq-check-box" checked>
+                            <div class="inq-secret-texts">
+                                <span class="inq-secret-heading">비밀글로 문의하기</span>
+                                <span class="inq-secret-subtext">작성자와 관리자만 확인 가능합니다.</span>
+                            </div>
+                        </label>
+
+                        <button class="inq-submit-action">문의 등록</button>
+                    </main>
+                </div>
+
+                <div class="cont related">
+                    <h2 class="section-heading">함께 많이 본 상품</h2>
+                    <div class="related-wrap">
+                        <ul class="related-track">
+                            <li class="related-item"><img src="images/related-pd-01.jpg" alt="관련상품"></li>
+                            <li class="related-item"><img src="images/related-pd-02.jpg" alt="관련상품"></li>
+                            <li class="related-item"><img src="images/related-pd-03.jpg" alt="관련상품"></li>
+                            <li class="related-item"><img src="images/related-pd-04.jpg" alt="관련상품"></li>
+                            <li class="related-item"><img src="images/related-pd-05.jpg" alt="관련상품"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    const productData = {
+        1: {
+            name: "[기본] 코튼 맨투맨",
+            discount: "18%",
+            origin: "24,000원",
+            sale: "19,800원",
+            review: "[기본] 코튼 맨투맨 아이보리/M"
+        },
+        2: {
+            name: "오버핏 후드티",
+            discount: "22%",
+            origin: "32,000원",
+            sale: "24,900원",
+            review: "오버핏 후드티 블랙/M"
+        },
+        3: {
+            name: "소프트 라운드 니트",
+            discount: "15%",
+            origin: "29,000원",
+            sale: "24,600원",
+            review: "소프트 라운드 니트 멜란지그레이/M"
+        },
+        4: {
+            name: "데일리 반팔 티셔츠",
+            discount: "20%",
+            origin: "18,000원",
+            sale: "14,400원",
+            review: "데일리 반팔 티셔츠 아이보리/M"
+        }
+    };
+
+    function setProductDetail(){
+        const params = new URLSearchParams(location.search);
+        const product = productData[params.get("pd")] || productData[1];
+
+        $(".product-header .product-name").text(product.name);
+        $(".price-row .discount-rate").text(product.discount);
+        $(".price-row .price-original").text(product.origin);
+        $(".price-row .price-sale").text(product.sale);
+        $(".review-info .product-name").text(product.review);
+    }
+    $(".btn-solid").click(function(){
+        location.href = "shop_cart.html";
+    });
+
+    $(function(){
+        setProductDetail();
+
+        $(".option-color .option-btn").click(function(){
+            $(".option-color .option-btn").removeClass("selected");
+            $(this).addClass("selected");
+
+            let bgColor = $(this).css("background-color");
+
+            $(".selected-option-info .option-color").css("background-color", bgColor);
+            $(".selected-option").show();
+        });
+
+        $(".option-size .option-btn").click(function(){
+            $(".option-size .option-btn").removeClass("selected");
+            $(this).addClass("selected");
+
+            $(".selected-option-info .option-size").text($(this).text());
+            $(".selected-option").show();
+        });
+
+        $(".plus").click(function(){
+            let num = Number($(".quantity-value").text());
+            num++;
+
+            $(".quantity-value").text(num);
+            $(".selected-option-info .option-quantity").text(num);
+        });
+
+        $(".minus").click(function(){
+            let num = Number($(".quantity-value").text());
+
+            if(num > 1){
+                num--;
+            }
+
+            $(".quantity-value").text(num);
+            $(".selected-option-info .option-quantity").text(num);
+        });
+
+        $(".option-reset").click(function(){
+            $(".option-btn").removeClass("selected");
+            $(".quantity-value").text("1");
+            $(".selected-option-info .option-color").css("background-color", "transparent");
+            $(".selected-option-info .option-size").text("");
+            $(".selected-option-info .option-quantity").text("1");
+            $(".selected-option").hide();
+        });
+
+        $(".selected-option").hide();
+
+        $(".tab-menu li").click(function(){
+            let index = $(this).index();
+
+            $(".tab-menu li").removeClass("on");
+            $(this).addClass("on");
+            $(".detail-cuts, .app-container, .inquiry-wrapper, .related").hide();
+
+            if(index == 0){
+                $(".detail-cuts").show();
+            }else if(index == 1){
+                $(".app-container").show();
+            }else if(index == 2){
+                $(".inquiry-wrapper").show();
+            }else if(index == 3){
+                $(".related").show();
+            }
+        });
+
+        $(".app-container, .inquiry-wrapper, .related").hide();
+
+        $(".inq-category-btn").click(function(){
+            $(".inq-category-btn").removeClass("is-selected");
+            $(this).addClass("is-selected");
+        });
+
+        $("#file-upload").change(function(){
+            let file = this.files[0];
+
+            if(file){
+                $("#file-name-display").text(file.name);
+                $("#file-display-container").css("display", "flex");
+            }
+        });
+
+        $("#file-delete-btn").click(function(){
+            $("#file-upload").val("");
+            $("#file-name-display").text("");
+            $("#file-display-container").hide();
+        });
+
+        for(let i = 140; i <= 180; i += 10){
+            $("#height-list").append("<li>" + i + "cm ~</li>");
+        }
+
+        for(let i = 40; i <= 100; i += 5){
+            $("#weight-list").append("<li>" + i + "kg ~</li>");
+        }
+
+        $(".filter-btn").click(function(e){
+            e.stopPropagation();
+            $(".dropdown-list").not($(this).next()).hide();
+            $(this).next(".dropdown-list").toggle();
+        });
+
+        $(".dropdown-list li").click(function(){
+            let text = $(this).text();
+            $(this).closest(".dropdown").find(".filter-btn").text(text + " ▼");
+            $(this).parent().hide();
+        });
+
+        $("body").click(function(){
+            $(".dropdown-list").hide();
+        });
+    });
+
+    let relatedWrap = $(".related-wrap");
+    let relatedTrack = $(".related-track");
+    let relatedItems = $(".related-item");
+
+    relatedTrack.append(relatedItems.clone()).append(relatedItems.clone());
+
+    let relatedPaused = false;
+    let relatedSpeed = 0.55;
+
+    function relatedLimit(){
+        return relatedTrack[0].scrollWidth / 3;
+    }
+
+    function relatedSlide(){
+        const wrap = relatedWrap[0];
+        const limit = relatedLimit();
+
+        if(!relatedPaused && limit > wrap.clientWidth){
+            wrap.scrollLeft += relatedSpeed;
+
+            if(wrap.scrollLeft >= limit){
+                wrap.scrollLeft -= limit;
+            }
+        }
+
+        requestAnimationFrame(relatedSlide);
+    }
+
+    relatedSlide();
+
+    relatedWrap.on("touchstart mouseenter", function(){
+        relatedPaused = true;
+    });
+
+    relatedWrap.on("touchend mouseleave", function(){
+        relatedPaused = false;
+    });
+
+    const BANNER_NUM = $(".product-image-wrap .banner li").length;
+    let prevIndex = 0;
+    let isAnimating = false;
+    let startX, endX;
+
+    function nextSlide() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        let nextIndex = (prevIndex + 1) % BANNER_NUM;
+
+        $(".product-image-wrap .banner li").eq(prevIndex).animate({left: "-100%"}, 700);
+        $(".product-image-wrap .banner li").eq(nextIndex).css("left", "100%").animate({left: "0"}, 700, function(){
+            isAnimating = false;
+        });
+
+        $(".product-image-wrap .indicator button").eq(prevIndex).removeClass("on");
+        $(".product-image-wrap .indicator button").eq(nextIndex).addClass("on");
+
+        prevIndex = nextIndex;
+    }
+
+    function prevSlide() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        let nextIndex = (prevIndex - 1 + BANNER_NUM) % BANNER_NUM;
+
+        $(".product-image-wrap .banner li").eq(prevIndex).animate({left: "100%"}, 700);
+        $(".product-image-wrap .banner li").eq(nextIndex).css("left", "-100%").animate({left: "0"}, 700, function(){
+            isAnimating = false;
+        });
+
+        $(".product-image-wrap .indicator button").eq(prevIndex).removeClass("on");
+        $(".product-image-wrap .indicator button").eq(nextIndex).addClass("on");
+
+        prevIndex = nextIndex;
+    }
+
+    $(".product-image-wrap").on("touchstart", function(e){
+        startX = e.touches[0].clientX;
+        clearInterval(imageAutoSlide);
+    });
+
+    $(".product-image-wrap").on("touchend", function(e){
+        endX = e.changedTouches[0].clientX;
+        let diffX = startX - endX;
+
+        if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+
+        imageAutoSlide = setInterval(nextSlide, 3000);
+    });
+
+    let imageAutoSlide = setInterval(nextSlide, 3000);
+
+    $(".product-image-wrap .indicator button").click(function(){
+        let btnIndex = $(this).index();
+
+        if (prevIndex == btnIndex || isAnimating) return;
+        isAnimating = true;
+
+        $(this).addClass("on").siblings().removeClass("on");
+
+        if (btnIndex > prevIndex) {
+            $(".product-image-wrap .banner li").eq(prevIndex).animate({left: "-100%"}, 700);
+            $(".product-image-wrap .banner li").eq(btnIndex).css("left", "100%").animate({left: "0"}, 700, function(){
+                isAnimating = false;
+            });
+        } else {
+            $(".product-image-wrap .banner li").eq(prevIndex).animate({left: "100%"}, 700);
+            $(".product-image-wrap .banner li").eq(btnIndex).css("left", "-100%").animate({left: "0"}, 700, function(){
+                isAnimating = false;
+            });
+        }
+
+        prevIndex = btnIndex;
+        clearInterval(imageAutoSlide);
+        imageAutoSlide = setInterval(nextSlide, 3000);
+    });
+    </script>
+</body>
+</html>

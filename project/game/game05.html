@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심리테스트 — 결과 맞으면 소름</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131c;
+            --border: #2a2a3d;
+            --accent: #ff2e4c;
+            --accent2: #ff6b1a;
+            --text: #e8e8f0;
+            --text-dim: #7a7a9a;
+            --btn-bg: #1c1c2e;
+        }
+ 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+        body {
+            color: var(--text);
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 16px;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(255, 46, 76, 0.24), transparent 34%),
+                radial-gradient(circle at 82% 78%, rgba(255, 107, 26, 0.16), transparent 36%),
+                linear-gradient(135deg, #15070d 0%, #0a0a0f 52%, #17101a 100%);
+        }
+
+        body::before,
+        body::after {
+            display: none;
+        }
+
+        .wrapper {
+            width: 500px;
+            max-width: 500px;
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 22px;
+            border-radius: 28px;
+            border: 3px solid var(--border);
+            background: rgba(19, 19, 28, 0.96);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+            overflow: hidden;
+        }
+ 
+        .header {
+            text-align: center;
+            margin-bottom: 0;
+            padding-top: 8px;
+        }
+        .header h1 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .header h1 span { color: var(--accent); }
+        .progress-wrap {
+            margin-top: -6px;
+            margin-bottom: 0;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+ 
+        .quest-area {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .quest-area::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+        }
+        .quest-num {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-top: -3px;
+            margin-bottom: 9px;
+        }
+        .quest-num::before {
+            content: '';
+            display: inline-block;
+            width: 16px; height: 2px;
+            background: var(--accent);
+        }
+ 
+        .q-img {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .q-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 10px;
+        }
+        .q-img img[src=""] {
+            display: none;
+        }
+        .q-img img[src=""] + .img-placeholder,
+        .img-placeholder {
+            color: var(--text-dim);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+ 
+        .tit {
+            font-family: 'Noto Sans KR', sans-serif; 
+            font-size: 16px;
+            font-weight: 700;                         
+            line-height: 1.55;
+            color: var(--text);
+            margin-bottom: 12px;
+            white-space: pre-line;
+            word-break: keep-all;
+        }
+        .btns {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-top: auto;
+        }
+        .btns button {
+            background: var(--btn-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-height: 42px;
+            padding: 8px 14px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            word-break: keep-all;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .btns button::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%; width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.2s ease;
+        }
+        .btns button:hover {
+            background: rgba(255,46,76,0.08);
+            border-color: var(--accent);
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .btns button:hover::before { transform: scaleY(1); }
+        .btns button:active { transform: translateX(2px) scale(0.99); }
+ 
+        .result-area {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 22px 24px;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        .result-area::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+
+        .loading-area {
+            display: none;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 22px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.35s ease forwards;
+        }
+
+        .loading-area::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255,255,255,0.08);
+            border-top-color: var(--accent);
+            border-right-color: var(--accent2);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        .loading-text {
+            color: var(--text);
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+ 
+        .result-area .r-img {
+            width: 54%;
+            max-width: 190px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 14px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .result-area .r-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+        }
+        .result-area .r-img img[src=""] { display: none; }
+
+        .result-emoji {
+            font-size: 42px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .result-type {
+            font-family: 'Noto Sans KR', sans-serif;  
+            font-size: 24px;
+            font-weight: 700;                        
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 14px;
+            word-break: keep-all;
+        }
+        .restart-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 26px;
+            font-family: 'Noto Sans KR', sans-serif;  
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+        .restart-btn:hover {
+            background: var(--accent2);
+            transform: translateY(-2px);
+        }
+ 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .quest-area.fade-out {
+            animation: fadeOut 0.25s ease forwards;
+        }
+        .quest-area.fade-in {
+            animation: fadeInUp 0.35s ease forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(-10px); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 520px) {
+            body {
+                align-items: flex-start;
+                padding: 16px;
+            }
+
+            .wrapper {
+                width: 100%;
+                height: auto;
+                min-height: 650px;
+                gap: 12px;
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .q-img {
+                height: 135px;
+            }
+
+            .quest-area,
+            .loading-area,
+            .result-area {
+                padding: 16px 14px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+<div class="wrapper">
+ 
+    <div class="header">
+        <h1>당신은 어떤<span> 인간</span>인가</h1>
+    </div>
+ 
+    <div class="progress-wrap">
+        <div class="progress-info">
+            <span class="progress-label">진행도</span>
+            <span class="progress-count">1 / 5</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 20%"></div>
+        </div>
+    </div>
+ 
+    <div class="quest-area">
+        <div class="quest-num">Question 01</div>
+        <div class="q-img">
+            <img src="" alt="질문 이미지">
+            <span class="img-placeholder"></span>
+        </div>
+        <h2 class="tit">질문 로딩 중...</h2>
+        <div class="btns"></div>
+    </div>
+ 
+    <div class="loading-area">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">분석중...</p>
+    </div>
+
+    <div class="result-area">
+        <span class="result-emoji">🪞</span>
+        <div class="r-img">
+            <img src="" alt="결과 이미지">
+            <span class="img-placeholder"></span>
+        </div>
+        <h2 class="tit result-type">결과 타입</h2>
+        <p class="desc"></p>
+        <button class="restart-btn">다시 해보기</button>
+    </div>
+ 
+</div>
+ 
+<script>
+const questions = [
+    {
+        quest: "가장 친한 친구가 당신이 가장 원하던 것을 몰래 가져갔습니다. 아무렇지 않게 웃고 있습니다. 어떻게 하시겠습니까?",
+        img: "quest01.png",
+        answer: [
+            { txt: "일단 아무 말도 하지 않고 상황을 지켜본다.", type: "타입1" },
+            { txt: "바로 연락해서 이유를 따져본다.", type: "타입2" },
+            { txt: "괜찮은 척하지만 계속 마음에 남는다.", type: "타입3" },
+            { txt: "신경 쓰이지만 그냥 넘기고 다른 일에 집중한다.", type: "타입4" }
+        ]
+    },
+    {
+        quest: "오랜 시간 공들여 만든 것이 하루아침에 무너졌습니다. 되돌릴 수 없습니다. 지금 어떻게 하시겠습니까?",
+        img: "quest02.png",
+        answer: [
+            { txt: "상황을 받아들이고 의미를 찾으려 한다.", type: "타입1" },
+            { txt: "화가 나서 감정을 밖으로 표현한다.", type: "타입2" },
+            { txt: "겉으로는 괜찮은 척하지만 혼자 계속 생각한다.", type: "타입3" },
+            { txt: "일단 생각을 미루고 다른 것에 집중한다.", type: "타입4" }
+        ]
+    },
+    {
+        quest: "지금 삶을 완전히 바꿀 기회가 있습니다. 대신 실패하면 지금 가진 모든 것을 잃게 됩니다. 어떻게 하시겠습니까?",
+        img: "quest03.png",
+        answer: [
+            { txt: "위험을 감수하고 변화를 선택한다.", type: "타입1" },
+            { txt: "선택은 하지만 계속 불안하고 고민한다.", type: "타입2" },
+            { txt: "다른 사람들의 의견을 먼저 들어본다.", type: "타입3" },
+            { txt: "결정을 미루고 상황을 지켜본다.", type: "타입4" }
+        ]
+    },
+    {
+        quest: "가장 믿었던 사람이 처음부터 당신을 이용하고 있었다는 사실을 알게 되었습니다. 어떻게 하시겠습니까?",
+        img: "quest04.png",
+        answer: [
+            { txt: "내가 무엇을 놓쳤는지 먼저 돌아본다.", type: "타입1" },
+            { txt: "바로 감정을 드러내고 따진다.", type: "타입2" },
+            { txt: "아무 말 없이 거리를 둔다.", type: "타입3" },
+            { txt: "생각만 하고 행동으로 옮기지는 않는다.", type: "타입4" }
+        ]
+    },
+    {
+        quest: "자신이 틀렸다는 것을 알게 되었지만, 인정하면 지금까지의 믿음이 무너집니다. 어떻게 하시겠습니까?",
+        img: "quest05.png",
+        answer: [
+            { txt: "대화를 다른 방향으로 돌려 상황을 넘긴다.", type: "타입1" },
+            { txt: "인정은 하지만 표현은 최소한으로 한다.", type: "타입2" },
+            { txt: "다른 해석을 찾아 자신의 입장을 유지한다.", type: "타입3" },
+            { txt: "혼자 다시 확인하고 스스로 납득하려 한다.", type: "타입4" }
+        ]
+    }
+];
+ 
+const results = {
+    "타입1": {
+        emoji: "🧊",
+        tit: "띠꺼운 바보",
+        img: "result01.png",
+        desc: "감정 냉동 창고 운영 중인 바보입니다. 상처받으면 일단 꽁꽁 얼려서 냉동실에 박아두고 아무렇지 않은 척하는데, 그 냉동실이 지금 용량 초과 직전입니다. 본인만 모릅니다. 완전 바보예요."
+    },
+    "타입2": {
+        emoji: "💥",
+        tit: "분조장 바보",
+        img: "result02.png",
+        desc: "폭발하고 후회하고 또 폭발하는 무한 자폭 사이클 바보입니다. 화낸 거 후회하고, 참은 것도 후회하고, 후회한 것도 후회합니다. 에너지는 넘치는데 전부 본인 갈아넣는 데 씁니다. 멍청한 바보예요."
+    },
+    "타입3": {
+        emoji: "🎭",
+        tit: "에휴 걍 바보",
+        img: "result03.png",
+        desc: "괜찮다고 하면 진짜 안 괜찮고, 이해한다고 하면 사실 1도 이해 못 한 바보입니다. 겉은 멀쩡하고 속은 부글부글. 일기장이 제일 솔직한 사람인데 일기장한테만 바보짓 안 합니다."
+    },
+    "타입4": {
+        emoji: "🌀",
+        tit: "멍청한 바보",
+        img: "result04.png",
+        desc: "결정을 못 해서 인생이 알아서 결말 내줄 때까지 기다리는 바보입니다. 계획은 4K 초고화질인데 실행은 0fps. 본인 인생인데 관객석에서 팝콘 먹으면서 보고 있는 진짜 바보예요."
+    }
+};
+ 
+ 
+const questArea    = document.querySelector(".quest-area");
+const questNumEl   = questArea.querySelector(".quest-num");
+const questTitle   = questArea.querySelector(".tit");
+const questImg     = questArea.querySelector(".q-img img");
+const imgPlaceholder = questArea.querySelector(".img-placeholder");
+const answerBtns   = questArea.querySelector(".btns");
+const loadingArea  = document.querySelector(".loading-area");
+const resultArea   = document.querySelector(".result-area");
+const resultEmoji  = resultArea.querySelector(".result-emoji");
+const resultType   = resultArea.querySelector(".result-type");
+const resultImg    = resultArea.querySelector(".r-img img");
+const resultDesc   = resultArea.querySelector(".desc");
+const progressFill = document.querySelector(".progress-fill");
+const progressCount= document.querySelector(".progress-count");
+const qTotalNum    = questions.length;
+ 
+let qNum = 0;
+let typeCounts = {};
+ 
+renderQuest();
+ 
+answerBtns.addEventListener("click", (e) => {
+    if (e.target.tagName != "BUTTON") return;
+ 
+    const type = e.target.dataset.type;
+    typeCounts[type] = (typeCounts[type] || 0) + 1;
+ 
+    qNum++;
+ 
+    if (qNum < qTotalNum) {
+        questArea.classList.add("fade-out");
+        setTimeout(() => {
+            questArea.classList.remove("fade-out");
+            renderQuest();
+            questArea.classList.add("fade-in");
+            setTimeout(() => questArea.classList.remove("fade-in"), 350);
+        }, 250);
+    } else {
+        showLoadingThenResult();
+    }
+});
+ 
+document.querySelector(".restart-btn").addEventListener("click", () => {
+    qNum = 0;
+    typeCounts = {};
+    loadingArea.style.display = "none";
+    resultArea.style.display = "none";
+    questArea.style.display = "flex";
+    document.querySelector(".progress-wrap").style.display = "block";
+    renderQuest();
+});
+ 
+ 
+function renderQuest() {
+    const numStr = String(qNum + 1).padStart(2, "0");
+    questNumEl.textContent = `Question ${numStr}`;
+ 
+    questTitle.textContent = formatQuestionText(questions[qNum].quest);
+ 
+    questImg.src = `images/${questions[qNum].img}`;
+    questImg.style.display = "block";
+    imgPlaceholder.style.display = "none";
+ 
+    questImg.onerror = () => {
+        questImg.style.display = "none";
+        imgPlaceholder.style.display = "block";
+    };
+ 
+    let btns = "";
+    questions[qNum].answer.forEach((obj, index) => {
+        btns += `<button data-type="${obj.type}">${index + 1}. ${obj.txt}</button>`;
+    });
+    answerBtns.innerHTML = btns;
+ 
+    const percent = ((qNum + 1) / qTotalNum) * 100;
+    progressFill.style.width = percent + "%";
+    progressCount.textContent = `${qNum + 1} / ${qTotalNum}`;
+}
+
+function formatQuestionText(text) {
+    return text.replace(/([.!?。！？])\s+/g, "$1\n");
+}
+ 
+ 
+function showLoadingThenResult() {
+    questArea.style.display = "none";
+    document.querySelector(".progress-wrap").style.display = "none";
+    loadingArea.style.display = "flex";
+
+    setTimeout(() => {
+        loadingArea.style.display = "none";
+        renderResult();
+    }, 2000);
+}
+
+function renderResult() {
+    const finalType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0][0];
+ 
+    resultEmoji.textContent = results[finalType].emoji;
+    resultType.textContent  = results[finalType].tit;
+    resultDesc.textContent  = results[finalType].desc;
+    resultImg.src = `images/${results[finalType].img}`;
+ 
+    resultImg.onerror = () => { resultImg.style.display = "none"; };
+ 
+    questArea.style.display = "none";
+    document.querySelector(".progress-wrap").style.display = "none";
+    resultArea.style.display = "block";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운명은 동전이 정한다</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px 16px;
+      font-family:"Malgun Gothic","맑은 고딕",sans-serif;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 210, 235, 0.95), transparent 34%),
+        radial-gradient(circle at 82% 78%, rgba(190, 205, 255, 0.7), transparent 38%),
+        linear-gradient(135deg, #fff7fc 0%, #ffe7f4 48%, #eef3ff 100%);
+      overflow-x:hidden
+    }
+
+    .game{
+      width:500px;
+      max-width:100%;
+      height:650px;
+      position:relative;
+      padding:18px 22px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      background:#fffaff;
+      border:4px solid #ff9fcb;
+      border-radius:30px;
+      box-shadow:0 18px 40px rgba(255,79,160,0.18);
+      overflow:hidden;
+    }
+
+    .top-badge{
+      width:fit-content;
+      margin:0 auto;
+      padding: 5px 16px;
+      text-align:center;
+      border-radius:999px;
+      background:#fff;
+      border:2px solid #ffc2df;
+      color:#ff4fa0;
+      font-size:15px;
+      font-weight:800;
+    }
+
+    h1{
+      margin:0;
+      text-align:center;
+      font-size:30px;
+      line-height:1.15;
+      letter-spacing:-1px;
+      color:#ff2f93;
+    }
+
+    .sub{
+      margin:0;
+      text-align:center;
+      font-size:14px;
+      line-height:1.35;
+      font-weight:700;
+      color:#c55d95;
+    }
+
+    .score-panel{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-bottom:0;
+    }
+
+    .score-card{
+      background:#fff;
+      border:2px solid #ffd0e6;
+      border-radius:18px;
+      padding:8px 8px 7px;
+      text-align:center;
+      min-width:0;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:4px;
+      font-size:10px;
+      font-weight:800;
+      color:#c26699;
+      white-space:nowrap;
+    }
+
+    .value{
+      display:block;
+      font-size:23px;
+      line-height:1;
+      font-weight:900;
+      color:#ff4fa0;
+    }
+
+    .coin-stage{
+      width:100%;
+      flex:1;
+      min-height:0;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border-radius:28px;
+      border:3px solid #ffc4e0;
+      background:radial-gradient(circle at 50% 30%,#fff 0%,#ffe9f4 35%,#ffd8ea 100%);
+    }
+
+    .coin{
+      width:min(260px, 72%);
+      aspect-ratio:1 / 1;
+      height:auto;
+      position:relative;
+      transform-style:preserve-3d;
+      transition:transform 1s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .coin-face{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      border-radius:50%;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+    }
+
+    .front{
+      transform:rotateY(0deg);
+    }
+
+    .back{
+      transform:rotateY(180deg);
+    }
+
+    .coin-face img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    .choice-row{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-top:-3px;
+      margin-bottom:10px;
+      width:100%;
+    }
+
+    .choice-row button{
+      flex:1;
+      max-width:190px;
+      min-width:0;
+      min-height:50px;
+      padding:10px 0 9px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      color:#fff;
+      font-size:21px;
+      font-weight:900;
+      letter-spacing:-0.5px;
+      transition:transform .08s ease, box-shadow .08s ease;
+    }
+
+    .choice-row button:active{
+      transform:translateY(6px) scale(0.98);
+    }
+
+    .btn-front{
+      background:linear-gradient(180deg,#ff9fcb 0%,#ff6fb0 100%);
+      box-shadow:0 8px 0 #e45496;
+    }
+
+    .btn-front:active{
+      box-shadow:0 2px 0 #e45496;
+    }
+
+    .btn-back{
+      background:linear-gradient(180deg,#9fbaff 0%,#6f8bff 100%);
+      box-shadow:0 8px 0 #4f63e4;
+    }
+
+    .btn-back:active{
+      box-shadow:0 2px 0 #4f63e4;
+    }
+
+    .choice-row button:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .result-box{
+      margin-top:0;
+      padding:10px 14px;
+      text-align:center;
+      border-radius:14px;
+      background:#fff8fc;
+      border:2px dashed #ff9fcb;
+      min-height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-main{
+      font-size:20px;
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:-0.8px;
+      color:#ff4fa0;
+    }
+
+    .result-box.success{
+      background:#fff1f8;
+      border-color:#ff77b7;
+    }
+
+    .result-box.fail{
+      background:#f3f6ff;
+      border-color:#8fabff;
+    }
+
+    .flash{
+      animation:pop .35s ease;
+    }
+
+    @keyframes pop{
+      0%{
+        transform:scale(1);
+      }
+      50%{
+        transform:scale(1.03);
+      }
+      100%{
+        transform:scale(1);
+      }
+    }
+
+    @media (max-width:480px){
+      body{
+        align-items:flex-start;
+        padding:16px;
+      }
+
+      .game{
+        width:100%;
+        height:auto;
+        min-height:650px;
+        padding:16px 14px;
+        gap:9px;
+      }
+
+      h1{
+        font-size:26px;
+      }
+
+      .sub{
+        font-size:13px;
+      }
+
+      .score-panel{
+        gap:7px;
+      }
+
+      .score-card{
+        border-radius:16px;
+        padding:8px 5px 7px;
+      }
+
+      .value{
+        font-size:21px;
+      }
+
+      .coin-stage{
+        flex:1;
+      }
+
+      .coin{
+        width:min(230px, 76%);
+      }
+
+      .choice-row button{
+        min-height:48px;
+        font-size:19px;
+      }
+
+      .result-box{
+        min-height:48px;
+        padding:9px 10px;
+      }
+
+      .result-main{
+        font-size:18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game">
+    <div class="top-badge">운빨 테스트</div>
+
+    <h1>메챠쿠챠 운빨 코인!</h1>
+    <p class="sub">앞이냐 뒤냐. 오늘 운빨 어디까지 가나 보자.</p>
+
+    <div class="score-panel">
+      <div class="score-card">
+        <span class="label">정답 수</span>
+        <span class="value" id="score">0</span>
+      </div>
+      <div class="score-card">
+        <span class="label">연승</span>
+        <span class="value" id="streak">0</span>
+      </div>
+      <div class="score-card">
+        <span class="label">플레이</span>
+        <span class="value" id="total">0</span>
+      </div>
+    </div>
+
+    <div class="coin-stage">
+      <div class="coin" id="coin">
+        <div class="coin-face front">
+          <img src="images/front.png" alt="동전 앞면">
+        </div>
+        <div class="coin-face back">
+          <img src="images/back.png" alt="동전 뒷면">
+        </div>
+      </div>
+    </div>
+
+    <div class="choice-row">
+      <button class="btn-front" onclick="playGame(0)">앞 콕!</button>
+      <button class="btn-back" onclick="playGame(1)">뒤 콕!</button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-main" id="resultMain">선택하고 운빨 확인해봐!</div>
+    </div>
+  </div>
+
+  <script>
+    const coin = document.getElementById("coin");
+    const scoreEl = document.getElementById("score");
+    const streakEl = document.getElementById("streak");
+    const totalEl = document.getElementById("total");
+    const resultBox = document.getElementById("resultBox");
+    const resultMain = document.getElementById("resultMain");
+    const buttons = document.querySelectorAll(".choice-row button");
+
+    let rot = 0;
+    let score = 0;
+    let streak = 0;
+    let total = 0;
+    let playing = false;
+
+    // 버튼 잠깐 막기
+    function btnOff(onoff){
+    buttons.forEach(function(b){
+        b.disabled = onoff;
+    });
+    }
+
+    // 점수 표시
+    function scoreDraw(){
+    scoreEl.textContent = score;
+    streakEl.textContent = streak;
+    totalEl.textContent = total;
+    }
+
+    // 맞았을 때
+    function winText(){
+    resultBox.className = "result-box success flash";
+
+    if(streak >= 5){
+        resultMain.textContent = "미쳤다!! 운빨 폭발🔥";
+    }
+    else if(streak >= 3){
+        resultMain.textContent = "오, 꽤 잘 맞추는데?";
+    }
+    else{
+        resultMain.textContent = "올ㅋ 나이스";
+    }
+    }
+
+    // 틀렸을 때
+    function loseText(answer){
+    resultBox.className = "result-box fail flash";
+    resultMain.textContent = "땡!!!!!!!!!!!!!!!!!!!!!!!!!!";
+
+    if(answer === 0){
+    }
+
+    if(answer === 1){
+    }
+    }
+
+    // 동전 회전
+    function coinSpin(answer){
+    const spin = 360 * 4;
+
+    rot = rot + spin - (rot % 360);
+
+    if(answer === 1){
+        rot = rot + 180;
+    }
+
+    coin.style.transform = "rotateY(" + rot + "deg)";
+    }
+
+    // 메인 로직
+    function playGame(choice){
+    if(playing === true){
+        return;
+    }
+
+    playing = true;
+    btnOff(true);
+
+    resultBox.className = "result-box";
+    resultMain.textContent = "동전 굴러가는 중... 휙휙";
+
+    const answer = Math.floor(Math.random() * 2);
+
+    total = total + 1;
+
+    coinSpin(answer);
+
+    setTimeout(function(){
+
+        if(choice === answer){
+        score = score + 1;
+        streak = streak + 1;
+        winText();
+        }
+        else{
+        streak = 0;
+        loseText(answer);
+        }
+
+        scoreDraw();
+        playing = false;
+        btnOff(false);
+
+    },1000);
+    }
+
+    scoreDraw();
+  </script>
+
+</body>
+</html>

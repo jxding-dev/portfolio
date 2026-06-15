@@ -1,0 +1,604 @@
+#gnb{
+    overflow:hidden;
+    border-bottom:1px solid #eee;
+    position:relative;
+}
+
+
+#gnb ul{
+    display:flex;
+    gap:10px;
+    padding: 0 10px;
+
+    overflow-x:auto;
+    white-space:nowrap;
+
+    -webkit-overflow-scrolling:touch;
+
+    cursor:grab;
+    scrollbar-width: none;
+}
+
+#gnb ul::-webkit-scrollbar{
+    display:none;
+}
+
+#gnb li{
+    flex:0 0 auto;
+}
+
+#gnb li a{
+    text-decoration:none;
+    color:#666;
+    font-size:14px;
+}
+
+#gnb ul{
+    display:flex;
+    gap:20px;
+    position:relative;
+    padding-bottom:8px;
+}
+
+#gnb ul { position:relative; }
+
+#gnb li a{
+    text-decoration:none;
+    color:#666;
+    font-size:16px;
+}
+
+.menu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.search-result{
+    display: flex;
+    justify-content: center;
+    margin: 25px;
+}
+
+.tab-menu{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.tab-menu li {
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.tab-menu:last-of-type{
+    margin-bottom: 25px;
+}
+
+.tab-menu li{
+    display: inline-block;
+    margin: 2px;
+}
+
+.tab-menu button{
+    padding: 9px 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pd-info {
+    padding: 8px 5px 10px;
+
+}
+
+.pd-name {
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    font-weight: 600;
+}
+
+.pd-per {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.pd-price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pd-rete {
+    color: #d92b2b;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.pd-origin {
+    color: #aaa;
+    text-decoration: line-through;
+    font-size: 11px;
+}
+
+.pd-sale {
+    color: #111;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.card-ui-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 6px;
+}
+
+.card-ui.flow-y {
+    flex-shrink: 0;
+    width: calc(50% - 3px);
+    cursor: pointer;
+}
+
+
+.wishlist {
+    position: absolute; right: 0%; bottom: 0%;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.i-best {
+    position: absolute; left: 0%; top: 0%;
+    background-color: rgba(220, 220, 220, 0.8);
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 8px;
+}
+
+.img-mask {
+    padding-top: calc( 220 / 177  *100% );
+    background-color: #D9D9D9;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.wish-btn input{
+    display:none;
+}
+
+.tab-menu button {
+    font-size: 14px;
+}
+
+.tab-menu button.active {
+    font-weight: 700;
+}
+
+#gnb li a.active {
+    font-weight: 700;
+    color: #000;
+}
+
+#gnb li a:not(.active):hover {
+    color: #666;
+    font-weight: 400;
+}
+
+#gnb li a {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    font-size: 14px;
+}
+
+.tab-menu button {
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+.pd-name {
+    font-size: 14px;
+}
+
+.pd-sale {
+    font-size: 14px;
+}
+
+.wishlist {
+    width: 32px;
+    height: 32px;
+}
+
+.wishlist img {
+    width: 28px;
+    height: 28px;
+}
+
+.menu-top .i-box a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.search-result {
+    font-size:18px;
+}
+
+#gnb li a,
+.tab-menu button {
+    font-size:14px;
+}
+
+.pd-name,
+.pd-sale {
+    font-size:14px;
+}
+
+.pd-per,
+.pd-rete,
+.pd-origin {
+    font-size:13px;
+}
+
+.pd-per {
+    margin-top: 8px;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.menu-top {
+    min-height: 52px;
+    padding: 0 8px;
+}
+
+.menu-top h1 {
+    flex: 1;
+    text-align: center;
+}
+
+
+
+.icon-right {
+    display: flex;
+    align-items: center;
+}
+
+#gnb ul {
+    gap: 18px;
+    padding: 0 10px;
+}
+
+#gnb li a {
+    min-height: 40px;
+    padding: 0 2px;
+    white-space: nowrap;
+}
+
+.search-result {
+    margin: 24px 0 28px;
+    font-weight: 600;
+}
+
+.tab-menu {
+    gap: 4px;
+    padding: 0 10px;
+}
+
+.tab-menu li {
+    margin: 0;
+}
+
+.tab-menu button {
+    min-height: 32px;
+    padding: 0 8px;
+    white-space: nowrap;
+}
+
+.tab-menu:last-of-type {
+    margin-bottom: 32px;
+}
+
+.card-ui-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 6px;
+    padding: 0 0 20px;
+}
+
+.card-ui.flow-y {
+    width: auto;
+    min-width: 0;
+}
+
+.img-mask {
+    aspect-ratio: 177 / 240;
+    padding-top: 0;
+}
+
+.card-ui .img-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pd-info {
+    padding: 9px 4px 11px;
+}
+
+.pd-name {
+    min-height: 20px;
+    margin-bottom: 7px;
+}
+
+.pd-price {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 4px;
+}
+
+.pd-sale {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.wishlist {
+    right: 8px;
+    bottom: 8px;
+}
+
+.menu-top {
+    min-height: 52px;
+    padding: 0 8px;
+}
+
+.menu-top h1 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.menu-top h1 a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+}
+
+.menu-top h1 img {
+    width: 132px;
+    height: auto;
+}
+
+.menu-top {
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+#gnb li a,
+.tab-menu button,
+.wishlist,
+.card-ui.flow-y {
+    transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+#gnb li a.active {
+    color: #111;
+}
+
+.tab-menu button.active {
+    color: #111;
+    background: #f1f1f1;
+}
+
+.card-ui .img-mask {
+    background: #d9d9d9;
+}
+
+.card-ui .img-mask img {
+    filter: saturate(1.04) contrast(1.02);
+}
+
+.card-ui.flow-y:active {
+    transform: scale(0.99);
+}
+
+.wishlist {
+    background-color: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.wishlist.active {
+    background-color: #fff1f1;
+}
+
+.i-best {
+    color: #111;
+    backdrop-filter: blur(6px);
+}
+
+.pd-name {
+    color: #1f1f1f;
+}
+
+.pd-sale {
+    color: #111;
+}
+
+
+/* ── UPGRADE ── */
+
+/* 카드 전체 */
+.card-ui.flow-y {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.card-ui.flow-y:hover {
+    box-shadow: 0 10px 28px rgba(0,0,0,0.13);
+    transform: translateY(-3px);
+}
+
+.card-ui.flow-y:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* 이미지 호버 줌 */
+.card-ui .img-mask img {
+    transition: transform 0.45s cubic-bezier(0.25,1,0.5,1);
+}
+
+.card-ui.flow-y:hover .img-mask img {
+    transform: scale(1.05);
+}
+
+/* BEST 배지 */
+.i-best {
+    background: #111;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 0 0 8px 0;
+    backdrop-filter: none;
+}
+
+/* 찜 버튼 */
+.wishlist {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 50%;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.wishlist:hover {
+    transform: scale(1.1);
+}
+
+.wishlist.active {
+    background-color: #fff0f0;
+}
+
+/* 탭 버튼 */
+.tab-menu button {
+    border-radius: 20px;
+    font-weight: 500;
+    color: #555;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+}
+
+.tab-menu button:hover {
+    background: #f5f5f5;
+    color: #111;
+}
+
+.tab-menu button.active {
+    background: #111;
+    color: #fff;
+    font-weight: 700;
+    border-color: #111;
+}
+
+/* GNB 활성 언더라인 */
+#gnb li a {
+    position: relative;
+}
+
+#gnb li a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #111;
+    border-radius: 2px 2px 0 0;
+}
+
+/* 검색결과 텍스트 */
+.search-result {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.4px;
+}
+
+/* 상품명 */
+.pd-name {
+    font-size: 13px;
+    letter-spacing: -0.2px;
+    line-height: 1.45;
+}
+
+/* 판매량 */
+.pd-per {
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* 할인율 */
+.pd-rete {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* 정가 */
+.pd-origin {
+    color: #ccc;
+}
+
+/* 판매가 */
+.pd-sale {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+/* pd-info 배경 */
+.pd-info {
+    background: #fff;
+    padding: 10px 10px 12px;
+}
+
+
+
+
+
+
+
+
+

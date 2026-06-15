@@ -1,0 +1,26 @@
+AddDefaultCharset UTF-8
+DefaultLanguage ko
+
+# MIME types
+AddType text/html .html .htm
+AddType text/css .css
+AddType application/javascript .js
+AddType video/mp4 .mp4
+AddType image/png .png
+AddType image/jpeg .jpg .jpeg
+AddType image/gif .gif
+AddType image/svg+xml .svg
+AddType font/woff2 .woff2
+AddType font/woff .woff
+
+# 디렉토리 목록 비공개
+Options -Indexes
+
+# 캐시 설정 (이미지·폰트·CSS·JS)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png  "access plus 1 month"
+    ExpiresByType text/css   "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

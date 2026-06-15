@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미 담았으면 사야지 · 장바구니</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="styles/reset.css"/>
+    <link rel="stylesheet" href="styles/base.css"/>
+    <link rel="stylesheet" href="styles/shop_cart.css"/>
+</head>
+<body>
+    <div class="cart-wrapper">
+        <header class="cart-topbar">
+            <button type="button" class="cart-back-btn i-func"><img src="images/icon/mean/arrow-left.png" alt="뒤로가기"></button>
+            <div class="cart-page-title">장바구니</div>
+            <div class="cart-spacer"></div>
+        </header>
+
+        <div class="cart-select-all-wrap i-func">
+            <p class="cart-select-all">
+                <img src="images/icon/mean/checkbox-outline-check.png" alt="전체선택">
+            </p>
+        </div>
+
+        <div class="cart-item-list">
+            <div class="cart-item">
+                <div class="cart-check-btn checked">
+                    <p class="i-func"><img src="images/icon/mean/checkbox-checked-filled.png" alt="선택"></p>
+                </div>
+                <img src="images/list-pd-02.jpg" alt="상품이미지" class="cart-item-img">
+
+                <div class="cart-item-content">
+                    <div class="cart-item-top">
+                        <div class="cart-item-info">
+                            <span class="cart-item-name">[기본] 린넨 와이드 팬츠</span>
+                            <span class="cart-item-option">아이보리/M</span>
+                        </div>
+                        <button class="cart-delete-btn i-func">
+                            <img src="images/icon/mean/close-square.png" alt="삭제">
+                        </button>
+                    </div>
+
+                    <div class="cart-item-bottom">
+                        <div class="cart-qty-wrap">
+                            <button><p class="i-func"><img src="images/icon/mean/minus-square.png" alt="감소"></p></button>
+                            <p class="cart-qty-num">1</p>
+                            <button><p class="i-func"><img src="images/icon/mean/plus-square.png" alt="증가"></p></button>
+                        </div>
+                        <span class="cart-item-price" data-price="19900">19,900원</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="cart-check-btn checked">
+                    <p class="i-func"><img src="images/icon/mean/checkbox-checked-filled.png" alt="선택"></p>
+                </div>
+                <img src="images/list-pd-04.jpg" alt="상품이미지" class="cart-item-img">
+
+                <div class="cart-item-content">
+                    <div class="cart-item-top">
+                        <div class="cart-item-info">
+                            <span class="cart-item-name">[기본] 체크 할터넥 탑</span>
+                            <span class="cart-item-option">차콜/S</span>
+                        </div>
+                        <button class="cart-delete-btn i-func">
+                            <img src="images/icon/mean/close-square.png" alt="삭제">
+                        </button>
+                    </div>
+
+                    <div class="cart-item-bottom">
+                        <div class="cart-qty-wrap">
+                            <button><p class="i-func"><img src="images/icon/mean/minus-square.png" alt="감소"></p></button>
+                            <p class="cart-qty-num">1</p>
+                            <button><p class="i-func"><img src="images/icon/mean/plus-square.png" alt="증가"></p></button>
+                        </div>
+                        <span class="cart-item-price" data-price="15900">15,900원</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <div class="cart-summary-row">
+                <span>쿠폰 적용가</span>
+                <span>0원</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>할인 적용가</span>
+                <span class="cart-discount-price">-1,500원</span>
+            </div>
+        </div>
+
+        <div class="cart-total-wrap">
+            <span class="cart-total-count">총 2건</span>
+            <span class="cart-total-price">32,800원</span>
+        </div>
+
+        <div class="cart-bottom-action">
+            <button class="cart-submit-btn">구매하기</button>
+        </div>
+    </div>
+
+    <script>
+    $(function () {
+        $(".cart-back-btn").click(function(){
+            location.href = "shop_detail.html";
+        });
+
+        const CHECK_ON = "images/icon/mean/checkbox-checked-filled.png";
+        const CHECK_OFF = "images/icon/mean/checkbox-outline-check.png";
+
+        function toggleCheck($btn){
+            const $img = $btn.find("img");
+
+            if($btn.hasClass("checked")){
+                $btn.removeClass("checked");
+                $img.attr("src", CHECK_OFF);
+            }else{
+                $btn.addClass("checked");
+                $img.attr("src", CHECK_ON);
+            }
+        }
+
+        $(".cart-check-btn").click(function(){
+            toggleCheck($(this));
+            syncSelectAll();
+            updateCart();
+        });
+
+        $(".cart-select-all").click(function(){
+            const allChecked = $(".cart-check-btn.checked").length === $(".cart-check-btn").length;
+
+            $(".cart-check-btn").each(function(){
+                const $img = $(this).find("img");
+
+                if(allChecked){
+                    $(this).removeClass("checked");
+                    $img.attr("src", CHECK_OFF);
+                }else{
+                    $(this).addClass("checked");
+                    $img.attr("src", CHECK_ON);
+                }
+            });
+
+            syncSelectAll();
+            updateCart();
+        });
+
+        function syncSelectAll(){
+            const total = $(".cart-check-btn").length;
+            const checked = $(".cart-check-btn.checked").length;
+            const $top = $(".cart-select-all");
+            const $img = $top.find("img");
+
+            if(total === checked && total !== 0){
+                $top.addClass("checked");
+                $img.attr("src", CHECK_ON);
+            }else{
+                $top.removeClass("checked");
+                $img.attr("src", CHECK_OFF);
+            }
+        }
+
+        $(".cart-qty-wrap button:first-child").click(function(){
+            const $num = $(this).siblings(".cart-qty-num");
+            let qty = Number($num.text());
+
+            if(qty > 1) qty--;
+
+            $num.text(qty);
+            updateCart();
+        });
+
+        $(".cart-qty-wrap button:last-child").click(function(){
+            const $num = $(this).siblings(".cart-qty-num");
+            let qty = Number($num.text());
+
+            qty++;
+            $num.text(qty);
+            updateCart();
+        });
+
+        function updateCart(){
+            let totalPrice = 0;
+            let discount = 0;
+            let count = 0;
+
+            $(".cart-item").each(function(){
+                const checked = $(this).find(".cart-check-btn").hasClass("checked");
+
+                if(!checked) return;
+
+                count++;
+
+                const $priceEl = $(this).find(".cart-item-price");
+                const unit = Number($priceEl.data("price"));
+                const qty = Number($(this).find(".cart-qty-num").text());
+                const itemTotal = unit * qty;
+
+                $priceEl.text(itemTotal.toLocaleString() + "원");
+
+                totalPrice += itemTotal;
+                discount += 1500 * qty;
+            });
+
+            $(".cart-discount-price").text("-" + discount.toLocaleString() + "원");
+
+            const final = totalPrice - discount;
+
+            $(".cart-total-price").text(final.toLocaleString() + "원");
+            $(".cart-total-count").text("총 " + count + "건");
+        }
+
+        syncSelectAll();
+        updateCart();
+    });
+    </script>
+</body>
+</html>

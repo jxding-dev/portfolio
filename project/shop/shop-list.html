@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뭐 살지 고민 중 · 상품 리스트</title>
+    <link rel="stylesheet" href="styles/reset.css"/>
+    <link rel="stylesheet" href="styles/base.css"/>
+    <link rel="stylesheet" href="styles/shop-list.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <header id="header">
+        <div class="menu-top">
+            <p class="i-box"><a href="#"><img src="images/icon/mean/menu-sliders-heart.png" alt="메뉴"></a></p>
+            <h1><a href="shop-list.html"><img src="images/icon/mean/error-logo.png" alt="로고"></a></h1>
+            <p class="i-box icon-right">
+                <a href="#"><img src="images/icon/mean/search-clock.png" alt="검색"></a>
+                <a href="shop_cart.html"><img src="images/icon/mean/shopping-bag-heart.png" alt="장바구니"></a>
+            </p>
+        </div>
+
+        <nav id="gnb">
+            <ul>
+                <li><a href="#">NEW</a></li>
+                <li><a href="#">BEST</a></li>
+                <li><a href="#">SALE</a></li>
+                <li><a href="#">자켓</a></li>
+                <li><a href="#">상의</a></li>
+                <li><a href="#">하의</a></li>
+                <li><a href="#">신발</a></li>
+                <li><a href="#">가방</a></li>
+                <li><a href="#">신발</a></li>
+                <li><a href="#">소품</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="search-result">상의 검색결과</div>
+        <ul class="tab-menu">
+            <li><button>맨투맨</button></li>
+            <li><button>후드티</button></li>
+            <li><button>플라티</button></li>
+            <li><button>니트</button></li>
+            <li><button>티셔츠</button></li>
+            <li><button>반팔티</button></li>
+        </ul>
+
+        <ul class="tab-menu">
+            <li><button>셔츠</button></li>
+            <li><button>블라우스</button></li>
+            <li><button>나시</button></li>
+        </ul>
+
+        <div class="card-ui-wrap">
+            <div class="card-ui flow-y" data-pd="1">
+                <div class="img-mask">
+                    <img src="images/list-pd-01.jpg" alt="[기본] 코튼 맨투맨">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST</p>
+                    </div>
+                </div>
+                <dl class="pd-info">
+                    <dt class="pd-name">[기본] 코튼 맨투맨</dt>
+                    <dd class="pd-per">판매량:842</dd>
+                    <dd class="pd-price">
+                        <span class="pd-rete">18%</span>
+                        <span class="pd-origin">24,000</span>
+                        <span class="pd-sale">19,800원</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="card-ui flow-y" data-pd="2">
+                <div class="img-mask">
+                    <img src="images/list-pd-02.jpg" alt="오버핏 후드티">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST</p>
+                    </div>
+                </div>
+                <dl class="pd-info">
+                    <dt class="pd-name">오버핏 후드티</dt>
+                    <dd class="pd-per">판매량:631</dd>
+                    <dd class="pd-price">
+                        <span class="pd-rete">22%</span>
+                        <span class="pd-origin">32,000</span>
+                        <span class="pd-sale">24,900원</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="card-ui flow-y" data-pd="3">
+                <div class="img-mask">
+                    <img src="images/list-pd-03.jpg" alt="소프트 라운드 니트">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST</p>
+                    </div>
+                </div>
+                <dl class="pd-info">
+                    <dt class="pd-name">소프트 라운드 니트</dt>
+                    <dd class="pd-per">판매량:418</dd>
+                    <dd class="pd-price">
+                        <span class="pd-rete">15%</span>
+                        <span class="pd-origin">29,000</span>
+                        <span class="pd-sale">24,600원</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="card-ui flow-y" data-pd="4">
+                <div class="img-mask">
+                    <img src="images/list-pd-04.jpg" alt="데일리 반팔 티셔츠">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST</p>
+                    </div>
+                </div>
+                <dl class="pd-info">
+                    <dt class="pd-name">데일리 반팔 티셔츠</dt>
+                    <dd class="pd-per">판매량:1,024</dd>
+                    <dd class="pd-price">
+                        <span class="pd-rete">20%</span>
+                        <span class="pd-origin">18,000</span>
+                        <span class="pd-sale">14,400원</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>    </section>
+
+    <script>
+    $(".wishlist").click(function(e){
+        e.stopPropagation();
+
+        const isActive = $(this).hasClass("active");
+
+        if(isActive){
+            $(this).removeClass("active");
+            $(this).children("img").attr("src","images/icon/mean/heart-outline.png");
+        }else{
+            $(this).addClass("active");
+            $(this).children("img").attr("src","images/icon/mean/heart-filled.png");
+        }
+    });
+
+    $(".card-ui").click(function(){
+        location.href = "shop_detail.html?pd=" + $(this).data("pd");
+    });
+
+    $("#gnb li").on("click", function(e){
+        e.preventDefault();
+
+        $("#gnb li a").removeClass("active");
+        $(this).find("a").addClass("active");
+    });
+
+    const slider = document.querySelector("#gnb ul");
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener("mousedown",(e)=>{
+        isDown = true;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener("mouseup",()=> isDown=false);
+    slider.addEventListener("mouseleave",()=> isDown=false);
+
+    slider.addEventListener("mousemove",(e)=>{
+        if(!isDown) return;
+
+        e.preventDefault();
+
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    $(window).on("load", function(){
+        slider.scrollTo({
+            left: 0,
+            behavior: "instant"
+        });
+    });
+
+    $(".tab-menu button").click(function(){
+        $(".tab-menu button").removeClass("active");
+        $(this).addClass("active");
+    });
+    </script>
+    <footer></footer>
+</body>
+</html>

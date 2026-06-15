@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미친듯이 탭하기 — 손가락 각오해</title>
+  <style>
+
+    /* 추가된 부분 */
+    .modal-screen {
+      min-height: auto; /* ← 원래 인라인으로 있던 style="min-height:auto;" 를 여기로 옮김 */
+    }
+    
+    @font-face {
+      font-family: 'DungGeunMo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'DungGeunMo', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0b8f8f 0%, #006d6d 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+      padding: 20px;
+    }
+
+    body.shake {
+      animation: shake 0.15s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-3px, 2px); }
+      50% { transform: translate(3px, -2px); }
+      75% { transform: translate(-2px, -2px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-40px) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .win-window {
+      width: 500px;
+      height: 650px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080;
+      padding: 2px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .title-bar {
+      background: linear-gradient(90deg, #000080, #1084d0);
+      color: #fff;
+      padding: 4px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 0;
+      flex: 0 0 auto;
+    }
+
+
+    .win-btn {
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      cursor: pointer;
+    }
+
+    .win-btn:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+    }
+
+    .screen {
+      display: none;
+      padding: 10px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .screen.on {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0;
+    }
+
+    .info-box {
+      flex: 1;
+      background: #fff;
+      border: 2px inset #fff;
+      padding: 13px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .info-label {
+      color: #222;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .info-box strong {
+      color: #000080;
+      font-size: 26px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .hero-box {
+      background: linear-gradient(180deg, #fff7c7 0%, #ffe48d 100%);
+      border: 2px solid #000;
+      padding: 24px 14px 22px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 20px;
+      color: #000080;
+      margin-bottom: 8px;
+    }
+
+    .hero-sub {
+      font-size: 12px;
+      line-height: 1.35;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .danger-meter {
+      width: 100%;
+      height: 16px;
+      border: 2px inset #fff;
+      background: #d9d9d9;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .danger-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #32cd32, #ffd700, #ff4500);
+      transition: width 0.12s;
+    }
+
+    .danger-text {
+      font-size: 12px;
+      color: #a00000;
+      animation: blink 1s step-end infinite;
+    }
+
+    .status-msg {
+      min-height: 22px;
+      margin-bottom: 0;
+      text-align: center;
+      color: #a00000;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .count-txt {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 60px;
+      font-weight: 900;
+      color: #000080;
+      text-align: center;
+      min-width: 92px;
+      text-shadow: 2px 2px 0 #fff;
+    }
+
+    .btn-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 0;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .tap-btn {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      font-size: 30px;
+      background: radial-gradient(circle at 30% 30%, #ffb091 0%, #ff6338 45%, #c72b10 100%);
+      color: #fff;
+      margin-bottom: 0;
+      border-top: 5px solid #ffd0bf;
+      border-left: 5px solid #ffb090;
+      border-right: 5px solid #7a1408;
+      border-bottom: 5px solid #7a1408;
+      box-shadow: 0 10px 0 #8b1d0c, 0 14px 14px rgba(0, 0, 0, 0.35);
+      text-shadow: 2px 2px 0 #7a1408;
+      transition: transform 0.06s, box-shadow 0.06s, border 0.06s;
+    }
+
+    .tap-btn:active {
+      transform: translateY(7px);
+      border-top-color: #7a1408;
+      border-left-color: #7a1408;
+      border-right-color: #ffd0bf;
+      border-bottom-color: #ffb090;
+      box-shadow: 0 3px 0 #8b1d0c, 0 5px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .tap-btn.pop {
+      transform: scale(1.04);
+    }
+
+    .bottom-btns {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .sub-btn {
+      font-size: 16px;
+      padding: 9px 14px;
+      min-height: 38px;
+    }
+
+    .reset-btn {
+      width: 360px;
+      max-width: 100%;
+    }
+
+    .floating-text {
+      position: absolute;
+      font-size: 13px;
+      color: #ff0000;
+      background: yellow;
+      border: 1px solid #000;
+      padding: 2px 4px;
+      pointer-events: none;
+      animation: floatUp 0.6s forwards;
+      z-index: 50;
+    }
+
+    .blue-screen {
+      background: #0000aa;
+      color: #fff;
+      line-height: 1.65;
+      text-align: left;
+      justify-content: center;
+    }
+
+    .blue-face {
+      font-size: 64px;
+      margin-bottom: 14px;
+    }
+
+    .blue-main {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .blue-small {
+      font-size: 14px;
+      margin-top: 10px;
+      opacity: 0.95;
+    }
+
+    .blue-btn-wrap {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .blue-btn {
+      font-size: 14px;
+      padding: 8px 16px;
+      min-width: 110px;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    #result-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: auto;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+    }
+
+    .modal-body {
+      text-align: left;
+      margin: 15px 0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .result-rank {
+      color: #000080;
+    }
+
+    /* ↓ 원래 인라인으로 있던 style="color:red;" 를 여기로 옮김 */
+    #final-score {
+      color: red;
+    }
+
+    /* ↓ 모달 안 버튼 정렬 (원래 인라인 style="text-align:center;" 를 여기로 옮김) */
+    .modal-btn-wrap {
+      text-align: center;
+    }
+
+    .game-screen {
+      gap: 10px;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        align-items: flex-start;
+        padding: 16px;
+      }
+
+      .win-window {
+        width: 100%;
+        height: auto;
+        min-height: 650px;
+      }
+
+      .screen {
+        padding: 9px;
+      }
+
+      .info-label {
+        font-size: 13px;
+      }
+
+      .info-box strong {
+        font-size: 21px;
+      }
+
+      .hero-title {
+        font-size: 18px;
+      }
+
+      .tap-btn {
+        width: 160px;
+        height: 160px;
+        font-size: 27px;
+      }
+
+      .count-txt {
+        font-size: 52px;
+        min-width: 78px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="win-window">
+    <div class="title-bar">
+      <span class="title-text">mad_click.exe</span>
+    </div>
+
+    <div class="screen game-screen on" id="gameScreen">
+      <div class="top-box">
+        <div class="info-box">
+          <span class="info-label">남은 시간</span>
+          <strong><span class="time">5</span>초</strong>
+        </div>
+        <div class="info-box">
+          <span class="info-label">현재 상태</span>
+          <strong id="dangerLevel">안전</strong>
+        </div>
+      </div>
+
+      <div class="hero-box">
+        <div class="hero-title">광클 생존 테스트</div>
+        <div class="hero-sub">버튼을 빠르게 눌러봐. 대신 너무 많이 누르면 시스템이 버티다 터짐.</div>
+        <div class="danger-meter">
+          <div class="danger-fill" id="dangerFill"></div>
+        </div>
+        <div class="danger-text" id="dangerText">과부하 수치 안정적</div>
+      </div>
+
+      <p class="status-msg">준비됨. 슬슬 눌러보셈</p>
+      <div class="btn-area">
+        <button class="win-btn tap-btn" onclick="game(event)">클릭!</button>
+        <p class="count-txt">0</p>
+      </div>
+
+      <div class="bottom-btns">
+        <button class="win-btn sub-btn reset-btn" onclick="reset()">다시하기</button>
+      </div>
+    </div>
+
+    <div class="screen blue-screen" id="blueScreen">
+      <div class="blue-face">:(</div>
+      <p class="blue-main">어라... 시스템이 버텨버림</p>
+      <p>너무 많이 눌러서 클릭 장치가 맛이 가버렸음.</p>
+      <p>총 <span id="blueScore">30</span>번 눌림.</p>
+      <p class="blue-small">그래도 다시하기 누르면 또 할 수 있음.</p>
+
+      <div class="blue-btn-wrap">
+        <button class="win-btn blue-btn" onclick="blueReset()">다시하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결과 모달: 인라인 style 3개 모두 제거하고 클래스로 교체 -->
+  <div class="win-window" id="result-modal">
+    <div class="title-bar">
+      <span>결과 창</span>
+      <button class="close-btn" onclick="closeModal()">X</button>
+    </div>
+    <div class="screen modal-screen on">
+      <!-- modal-screen 클래스로 min-height:auto 적용 -->
+      <div class="modal-body">
+        <p>시간 끝.</p>
+        <p>총 <strong id="final-score">0</strong>번 클릭함.</p>
+        <!-- #final-score CSS에서 color:red 적용 -->
+        <p>판정: <strong id="final-rank" class="result-rank">정상인</strong></p>
+      </div>
+      <div class="modal-btn-wrap">
+        <!-- modal-btn-wrap 클래스로 text-align:center 적용 -->
+        <button class="win-btn sub-btn" onclick="closeModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const countTxt = document.querySelector(".count-txt");
+    const timeBox = document.querySelector(".time");
+    const statusMsg = document.querySelector(".status-msg");
+    const tapBtn = document.querySelector(".tap-btn");
+    const titleText = document.querySelector(".title-text");
+
+    const dangerFill = document.getElementById("dangerFill");
+    const dangerText = document.getElementById("dangerText");
+    const dangerLevel = document.getElementById("dangerLevel");
+
+    const overlay = document.getElementById("overlay");
+    const modal = document.getElementById("result-modal");
+    const finalScore = document.getElementById("final-score");
+    const finalRank = document.getElementById("final-rank");
+
+    const gameScreen = document.getElementById("gameScreen");
+    const blueScreen = document.getElementById("blueScreen");
+    const blueScore = document.getElementById("blueScore");
+
+    let tapNum = 0;
+    let countNum = 5;
+    let auto = null;
+    let isBlue = false;
+    let blueBtnLock = false;
+
+    const floatingWords = [
+      "에러!", "버그!", "과부하!", "클릭!", "삐빅!", "으악", "멈추지마", "CPU 99%"
+    ];
+
+    const statusWords = [
+      "마우스가 살짝 화남",
+      "버튼이 버티는 중",
+      "시스템이 불안해함",
+      "팬 돌아가는 소리가 커짐",
+      "입력 장치가 억울해함",
+      "운영체제가 참는 중"
+    ];
+
+    function updateDanger() {
+      let percent = (tapNum / 30) * 100;
+
+      if (percent > 100) {
+        percent = 100;
+      }
+
+      dangerFill.style.width = percent + "%";
+
+      if (tapNum < 10) {
+        dangerText.textContent = "과부하 수치 안정적";
+        dangerLevel.textContent = "안전";
+      } else if (tapNum < 20) {
+        dangerText.textContent = "슬슬 위험해지는 중";
+        dangerLevel.textContent = "주의";
+      } else if (tapNum < 30) {
+        dangerText.textContent = "이거 좀 많이 눌렀는데";
+        dangerLevel.textContent = "위험";
+      } else {
+        dangerText.textContent = "이미 터짐";
+        dangerLevel.textContent = "오류";
+      }
+    }
+
+    function reset() {
+      clearInterval(auto);
+      tapNum = 0;
+      countNum = 5;
+      auto = null;
+      isBlue = false;
+      blueBtnLock = false;
+
+      countTxt.textContent = "0";
+      timeBox.textContent = "5";
+      statusMsg.textContent = "준비됨. 슬슬 눌러보셈";
+      titleText.textContent = "mad_click.exe";
+      tapBtn.textContent = "클릭!";
+
+      overlay.style.display = "none";
+      modal.style.display = "none";
+
+      blueScreen.classList.remove("on");
+      gameScreen.classList.add("on");
+
+      updateDanger();
+    }
+
+    function game(e) {
+      if (countNum === 0 || isBlue) {
+        return;
+      }
+
+      if (auto == null) {
+        countDown();
+      }
+
+      tapNum = tapNum + 1;
+      countTxt.textContent = tapNum;
+
+      createFloatingText(e.clientX, e.clientY);
+      randomStatus();
+      updateMadness();
+      updateDanger();
+
+      tapBtn.classList.add("pop");
+
+      setTimeout(function () {
+        tapBtn.classList.remove("pop");
+      }, 60);
+
+      if (tapNum >= 30) {
+        showBlueScreen();
+      }
+    }
+
+    function createFloatingText(x, y) {
+      const el = document.createElement("div");
+      el.className = "floating-text";
+      el.innerText = floatingWords[Math.floor(Math.random() * floatingWords.length)];
+      el.style.left = (x - 20 + Math.random() * 30) + "px";
+      el.style.top = (y - 10) + "px";
+      document.body.appendChild(el);
+
+      setTimeout(function () {
+        el.remove();
+      }, 600);
+    }
+
+    function randomStatus() {
+      statusMsg.textContent = statusWords[Math.floor(Math.random() * statusWords.length)];
+    }
+
+    function updateMadness() {
+      if (tapNum >= 8) {
+        titleText.textContent = "mad_click(1).exe";
+      }
+
+      if (tapNum >= 15) {
+        document.body.classList.add("shake");
+        tapBtn.textContent = "더!";
+
+        setTimeout(function () {
+          document.body.classList.remove("shake");
+        }, 150);
+      }
+
+      if (tapNum >= 23) {
+        statusMsg.textContent = "그만 눌러도 되는데 계속 누르는 중";
+      }
+    }
+
+    function countDown() {
+      auto = setInterval(function () {
+        countNum = countNum - 1;
+        timeBox.textContent = countNum;
+
+        if (countNum < 1) {
+          clearInterval(auto);
+          countNum = 0;
+          timeBox.textContent = 0;
+
+          if (!isBlue) {
+            showModal();
+          }
+        }
+      }, 1000);
+    }
+
+    function showBlueScreen() {
+      isBlue = true;
+      blueBtnLock = true;
+      clearInterval(auto);
+      blueScore.textContent = tapNum;
+
+      gameScreen.classList.remove("on");
+      blueScreen.classList.add("on");
+
+      setTimeout(function () {
+        blueBtnLock = false;
+      }, 500);
+    }
+
+    function blueReset() {
+      if (blueBtnLock) {
+        return;
+      }
+
+      reset();
+    }
+
+    function getRank() {
+      if (tapNum < 10) {
+        return "손가락 고장났아?";
+      } else if (tapNum < 20) {
+        return "개------못하네";
+      } else if (tapNum < 30) {
+        return "좀 치네";
+      } else {
+        return "메크로다.";
+      }
+    }
+
+    function showModal() {
+      finalScore.textContent = tapNum;
+      finalRank.textContent = getRank();
+      overlay.style.display = "block";
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      reset();
+    }
+
+    updateDanger();
+  </script>
+</body>
+</html>

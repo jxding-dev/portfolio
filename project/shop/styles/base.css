@@ -1,0 +1,208 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
+
+
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+  BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue",
+  "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+  "Malgun Gothic", sans-serif;
+  color:#222;
+}
+
+a {
+  color:#222;
+  text-decoration:none;
+}
+
+a:hover {
+  text-decoration:underline;
+}
+
+img {
+  vertical-align:top;
+  max-width:100%;
+  height:auto;
+}
+
+
+
+
+button {
+  border:none;
+  background:none;
+}
+
+button:hover {
+  cursor:pointer;
+}
+
+button.btn-form,
+label.btn-form {
+  display:inline-block;
+  border:1px solid #ccc;
+  padding:10px 20px;
+  cursor:pointer;
+  background:#fff;
+}
+
+
+
+
+.i-box img {
+  width:40px;
+  height:40px;
+}
+
+.i-func img {
+  width:32px;
+  height:32px;
+}
+
+.i-been img {
+  width:28px;
+  height:28px;
+}
+
+
+
+
+.img-mask {
+  position:relative;
+  overflow:hidden;
+}
+
+.img-mask img{
+  width:100%;
+  display:block;
+}
+
+
+
+
+
+
+
+#gnb {
+  overflow:hidden;
+  border-top:1px solid #E0E0E0;
+  border-bottom:1px solid #E0E0E0;
+}
+
+#gnb ul {
+  display:flex;
+}
+
+#gnb li {
+  flex-shrink:0;
+}
+
+#gnb li a {
+  display:block;
+  padding:10px;
+}
+
+
+
+
+legend,
+.blind {
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+}
+
+
+
+
+input,
+textarea,
+select,
+button {
+  font:inherit;
+  color:inherit;
+}
+
+input,
+textarea {
+  padding:10px;
+  border:1px solid #ccc;
+  outline:none;
+}
+
+textarea {
+  resize:vertical;
+}
+
+
+
+
+.butt {
+  padding:0 15px;
+}
+
+.butt button {
+  padding:12px 0;
+  background:#1B2342;
+  border-radius:3px;
+  color:#fff;
+  width:100%;
+}
+
+
+
+
+.bg-after,
+.bg-before {
+  position:relative;
+}
+
+.bg-after::after,
+.bg-before::before {
+  content:"";
+  position:absolute;
+  background:url(../images/shape-icon-sprite.png) no-repeat;
+  background-position:-9px -53px;
+}
+
+
+
+.related-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.related-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+.related-track {
+    display: flex;
+    gap: 12px;
+}
+
+.related-item {
+    flex: 0 0 auto;
+}
+
+button.btn-form,
+label.btn-form{
+  display:inline-block;
+  border:1px solid gray;
+  padding:10px 20px;
+  cursor:pointer;
+  background:#fff;
+}
+
+button:hover{cursor:pointer;}
+
+body {
+  font-size:15px;
+  line-height:1.45;
+}
+
+button {
+  font-size:16px;
+}

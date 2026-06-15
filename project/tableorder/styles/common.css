@@ -1,0 +1,31 @@
+/* =========================================
+   common.css - reset, base
+========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ul, li { list-style: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    color: #2f2f2f;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    background: #ffffff;
+}
+
+/* 스크롤바 전체 스타일 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #9f9f9f;
+}

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UP or DOWN — 찍어도 틀린다</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css');
+
+        @font-face {
+            font-family: 'KkuBulLim';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/BMkkubulimTTF-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'OkMallangW';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2603-1@1.0/OkMallangW-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-1Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-2ExtraLight.woff2') format('woff2');
+            font-weight: 200;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-3Light.woff2') format('woff2');
+            font-weight: 300;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-4Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-5Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-6SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-7Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-8ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'A2z';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-9Black.woff2') format('woff2');
+            font-weight: 900;
+            font-display: swap;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-size: inherit; }
+
+        h1, h2 { font-size: 20px; }
+        body { font-size: 16px; }
+        button { border: 0 none; background-color: transparent; cursor: pointer; }
+        input, button { font-family: inherit; }
+
+        body {
+            min-height: 100vh;
+            padding: 20px 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2c2c2c;
+            font-family: 'KkuBulLim', "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+            background:
+                radial-gradient(circle at 18% 18%, rgba(255, 214, 107, 0.55), transparent 34%),
+                radial-gradient(circle at 82% 78%, rgba(189, 229, 255, 0.62), transparent 38%),
+                linear-gradient(135deg, #fff8df 0%, #fff1e2 48%, #eaf7ff 100%);
+        }
+
+        .wrapper {
+            width: 500px;
+            max-width: 500px;
+            height: 650px;
+            margin: 0 auto;
+            padding: 24px 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 18px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 14px 30px rgba(72, 62, 62, 0.18);
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(180deg, #fffdf8 0%, #fff5ec 100%);
+        }
+
+        .wrapper::before,
+        .wrapper::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.45;
+            z-index: 0;
+        }
+
+        .wrapper::before {
+            width: 120px;
+            height: 120px;
+            top: -34px;
+            left: -34px;
+            background: #ffd66b;
+        }
+
+        .wrapper::after {
+            width: 150px;
+            height: 150px;
+            right: -62px;
+            bottom: -62px;
+            background: #bde5ff;
+        }
+
+        .wrapper > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-family: 'A2z', "Malgun Gothic", sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 0 #fff;
+            line-height: 1.1;
+        }
+
+        h1 span {
+            display: block;
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #7b6f67;
+            text-shadow: none;
+        }
+
+        .count {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 12px 28px;
+            border-radius: 999px;
+            font-family: 'Mona12', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #5b4f49;
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .num-box {
+            display: inline-block;
+            min-width: 34px;
+            margin: 0 6px;
+            color: #ff5a5a;
+            font-size: 28px;
+        }
+
+        .game-guide {
+            margin: 0;
+            font-family: 'Mona12', sans-serif;
+            font-size: 18px;
+            line-height: 1.45;
+            color: #7d6d66;
+        }
+
+        .inp-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .inp {
+            width: 68%;
+            height: 58px;
+            padding: 0 20px;
+            border: 3px solid #ffd1a8;
+            border-radius: 16px;
+            outline: none;
+            background: #fffdf9;
+            font-family: 'Mona12', sans-serif;
+            font-size: 19px;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .inp:focus {
+            border-color: #ff9f68;
+            box-shadow: 0 0 0 4px rgba(255, 159, 104, 0.18);
+        }
+
+        .btn {
+            min-width: 110px;
+            height: 58px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #ff9f68 0%, #ff7b54 100%);
+            color: #fff;
+            font-family: 'Mona12', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            box-shadow: 0 8px 14px rgba(255, 123, 84, 0.26);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 18px rgba(255, 123, 84, 0.3);
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 3;
+            min-width: 82px;
+            height: 38px;
+            padding: 0 14px;
+            border: 2px solid #ffd1a8;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.88);
+            color: #7d6d66;
+            font-family: 'Mona12', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 6px 12px rgba(72, 62, 62, 0.12);
+            transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            border-color: #ff9f68;
+            box-shadow: 0 9px 16px rgba(72, 62, 62, 0.16);
+        }
+
+        .msg-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 124px;
+            flex: 1;
+            margin: 0;
+            padding: 22px 22px;
+            border: 3px dashed #ffd3be;
+            border-radius: 24px;
+            font-family: 'Mona12', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .sub-msg {
+            margin: 0;
+            font-family: 'Mona12', sans-serif;
+            font-size: 18px;
+            line-height: 1.4;
+            color: #8d8079;
+        }
+
+        .msg-box.success {
+            animation: success-pop 0.75s ease;
+            border-color: #ffb700;
+            color: #ff8a00;
+            background: #fff8d8;
+            font-size: 46px;
+            box-shadow: 0 0 24px rgba(255, 183, 0, 0.45);
+        }
+
+        .msg-box.short-msg {
+            font-family: 'OkMallangW', "Malgun Gothic", sans-serif;
+            font-size: 58px;
+        }
+
+        .msg-box.small-msg {
+            font-size: 34px;
+        }
+
+        .fanfare-piece {
+            position: absolute;
+            top: 88px;
+            left: 50%;
+            width: 10px;
+            height: 18px;
+            border-radius: 3px;
+            pointer-events: none;
+            z-index: 2;
+            transform: translate(-50%, 0) rotate(var(--rotate));
+            animation: fanfare-burst 1.25s ease-out forwards;
+        }
+
+        @keyframes success-pop {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.12) rotate(-2deg); }
+            65% { transform: scale(1.06) rotate(2deg); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fanfare-burst {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(0.7) rotate(var(--rotate));
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--x)), var(--y)) scale(1.1) rotate(calc(var(--rotate) + 260deg));
+            }
+        }
+
+        @media (max-width: 520px) {
+            body {
+                align-items: flex-start;
+            }
+
+            .wrapper {
+                width: 100%;
+                height: auto;
+                min-height: 650px;
+                justify-content: flex-start;
+                padding: 22px 18px;
+                gap: 16px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h1 span {
+                font-size: 14px;
+            }
+
+            .count {
+                font-size: 18px;
+                padding: 12px 22px;
+            }
+
+            .game-guide {
+                font-size: 17px;
+            }
+
+            .inp-group {
+                flex-direction: column;
+            }
+
+            .inp,
+            .btn {
+                width: 100%;
+            }
+
+            .msg-box {
+                min-height: 118px;
+                font-size: 30px;
+            }
+
+            .msg-box.short-msg {
+                font-size: 46px;
+            }
+
+            .sub-msg {
+                font-size: 16px;
+            }
+
+            .reset-btn {
+                top: 14px;
+                right: 14px;
+                min-width: 74px;
+                height: 34px;
+                padding: 0 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<div class="wrapper">
+    <button type="button" class="reset-btn">&#45796;&#49884;&#54616;&#44592;</button>
+    <h1>
+        업다운 게임
+        <span>1부터 50 사이의 숫자를 맞혀보세요</span>
+    </h1>
+    <div class="count">
+        남은 기회 <span class="num-box">5</span> 회
+    </div>
+    <p class="game-guide">숫자를 입력하고<br>확인 버튼 또는 엔터키를 눌러주세요.</p>
+    <div class="inp-group">
+        <input type="number" min="1" max="50" placeholder="1~50 숫자" name="" id="" class="inp">
+        <button class="btn">확인</button>
+    </div>
+    <p class="msg-box short-msg">START!</p>
+    <p class="sub-msg">정답보다 크면 DOWN, 작으면 UP이 나와요.</p>
+</div>
+
+<script>
+    const inp = document.querySelector(".inp");
+    const btn = document.querySelector(".btn");
+    const resetBtn = document.querySelector(".reset-btn");
+    const msgBox = document.querySelector(".msg-box");
+    const numBox = document.querySelector(".num-box");
+    const wrapper = document.querySelector(".wrapper");
+
+    let count = 5;
+    let randomNum = makeRandomNum();
+
+    btn.addEventListener("click", () => {
+        game();
+    });
+
+    resetBtn.addEventListener("click", () => {
+        resetGame();
+    });
+
+    inp.addEventListener("keydown", (e) => {
+        if (e.key == "Enter") {
+            game();
+        }
+    });
+
+    function game() {
+        const userNum = Number(inp.value.trim());
+        msgBox.classList.remove("short-msg");
+        msgBox.classList.remove("small-msg");
+        msgBox.classList.remove("success");
+
+        if (!inp.value.trim()) {
+            msgBox.classList.add("small-msg");
+            msgBox.textContent = "숫자를 입력해주세요";
+            inp.focus();
+            return;
+        }
+
+        if (!Number.isInteger(userNum) || userNum < 1 || userNum > 50) {
+            msgBox.classList.remove("small-msg");
+            msgBox.textContent = "1~50 숫자만 입력!";
+            inp.value = "";
+            inp.focus();
+            return;
+        }
+
+        count--;
+        numBox.textContent = count;
+
+        let msg = "";
+        if (userNum === randomNum) {
+            msg = "정답!";
+            msgBox.textContent = msg;
+            showFanfare();
+            inp.disabled = true;
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+            return;
+        } else if (userNum > randomNum) {
+            msg = "DOWN!";
+        } else {
+            msg = "UP!";
+        }
+        if (count < 1) {
+            msgBox.textContent = `\uAC8C\uC784 \uC624\uBC84! \uC815\uB2F5\uC740 ${randomNum}\uC785\uB2C8\uB2E4.`;
+            inp.disabled = true;
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+            return;
+        }
+
+        msgBox.classList.add("short-msg");
+        msgBox.textContent = msg;
+        inp.value = "";
+        inp.focus();
+    }
+
+    function showFanfare() {
+        const colors = ["#ff5a5a", "#ffb700", "#54c6ff", "#7bd88f", "#ff8ad8"];
+
+        msgBox.classList.add("success");
+
+        for (let i = 0; i < 34; i++) {
+            const piece = document.createElement("span");
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 90 + Math.random() * 150;
+
+            piece.className = "fanfare-piece";
+            piece.style.backgroundColor = colors[i % colors.length];
+            piece.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+            piece.style.setProperty("--y", `${Math.sin(angle) * distance + 90}px`);
+            piece.style.setProperty("--rotate", `${Math.random() * 360}deg`);
+            piece.style.animationDelay = `${Math.random() * 0.12}s`;
+
+            wrapper.appendChild(piece);
+            piece.addEventListener("animationend", () => piece.remove());
+        }
+    }
+
+    function makeRandomNum() {
+        return Math.floor(Math.random() * 50) + 1;
+    }
+
+    function resetGame() {
+        count = 5;
+        randomNum = makeRandomNum();
+        numBox.textContent = count;
+
+        inp.value = "";
+        inp.disabled = false;
+        btn.disabled = false;
+        btn.style.opacity = "1";
+
+        msgBox.classList.remove("success", "small-msg");
+        msgBox.classList.add("short-msg");
+        msgBox.textContent = "START!";
+
+        wrapper.querySelectorAll(".fanfare-piece").forEach((piece) => piece.remove());
+        inp.focus();
+    }
+</script>
+</body>
+</html>

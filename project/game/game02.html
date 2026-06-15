@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>가위바위보 — 낼 거 다 알아</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Malgun Gothic", sans-serif;
+  min-height: 100vh;
+  padding: 20px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 215, 0, 0.24), transparent 32%),
+    radial-gradient(circle at 78% 75%, rgba(0, 255, 136, 0.16), transparent 34%),
+    linear-gradient(135deg, #16120a 0%, #080808 52%, #101813 100%);
+}
+
+.wrap {
+  width: 500px;
+  max-width: 100%;
+  height: 650px;
+  border: 3px solid #FFD700;
+  border-radius: 30px;
+  padding: 18px 20px;
+  background: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+h1 {
+  color: #FFD700;
+  font-size: 27px;
+  line-height: 1.15;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 0;
+}
+
+.score-wrap {
+  background: #000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  border: 1px solid #333;
+  padding: 11px 10px;
+  margin-bottom: 0;
+}
+
+.score-wrap div { text-align: center; }
+
+.score-wrap .label {
+  color: #666;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.score-wrap .num { font-weight: bold; font-size: 26px; line-height: 1; }
+
+#winNum { color: #FFD700; }
+#loseNum { color: #ff4444; }
+#drawNum { color: #888; }
+#rateNum { color: #00ff88; }
+
+.battle {
+  background: #000;
+  display: flex;
+  align-items: center;
+  border: 1px solid #333;
+  justify-content: space-between;
+  padding: 18px 14px;
+  margin-bottom: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.fighter {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.fighter .name {
+  display: block;
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.fighter .icon {
+  width: 132px;
+  height: 132px;
+  max-width: 100%;
+  font-size: 58px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.fighter .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vs {
+  color: #ff4444;
+  flex: 0 0 54px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.msg {
+  background: #000;
+  text-align: center;
+  border: 1px solid #333;
+  min-height: 46px;
+  color: #aaa;
+  padding: 10px 12px;
+  font-size: 16px;
+  line-height: 1.35;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msg.spinning { color: #00BFFF; }
+.msg.win-msg  { color: #FFD700; }
+.msg.lose-msg { color: #ff4444; }
+.msg.draw-msg { color: #888; }
+
+.btns {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.btns button {
+  flex: 1;
+  min-width: 0;
+  height: 112px;
+  padding: 10px 0 8px;
+  border: 2px solid #444;
+  background: #1a1a1a;
+  cursor: pointer;
+  color: white;
+  font-family: "Malgun Gothic", sans-serif;
+  gap: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.btns button:hover { border-color: #FFD700; }
+
+.btns button:active { transform: translateY(2px); }
+
+.btns button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btns button img {
+  width: 66px;
+  height: 66px;
+  max-width: 80%;
+  object-fit: contain;
+  display: block;
+}
+
+.btns button span {
+  font-size: 14px;
+  line-height: 1;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .wrap {
+    height: auto;
+    min-height: 650px;
+    padding: 18px 14px;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .score-wrap {
+    padding: 10px 8px;
+  }
+
+  .score-wrap .num {
+    font-size: 22px;
+  }
+
+  .fighter .icon {
+    width: 112px;
+    height: 112px;
+    font-size: 48px;
+  }
+
+  .vs {
+    flex-basis: 42px;
+    font-size: 20px;
+  }
+
+  .btns button {
+    height: 96px;
+  }
+
+  .btns button img {
+    width: 54px;
+    height: 54px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>🎰 SLOT 가위바위보</h1>
+
+  <div class="score-wrap">
+    <div>
+      <span class="label">WIN</span>
+      <span class="num" id="winNum">0</span>
+    </div>
+    <div>
+      <span class="label">LOSE</span>
+      <span class="num" id="loseNum">0</span>
+    </div>
+    <div>
+      <span class="label">DRAW</span>
+      <span class="num" id="drawNum">0</span>
+    </div>
+    <div>
+      <span class="label">WIN%</span>
+      <span class="num" id="rateNum">-%</span>
+    </div>
+  </div>
+
+  <div class="battle">
+    <div class="fighter">
+      <span class="name">COMPUTER</span>
+      <div class="icon" id="comIcon"><img src="images/1.png" alt="컴퓨터 선택"></div>
+    </div>
+    <div class="vs">VS</div>
+    <div class="fighter">
+      <span class="name">PLAYER</span>
+      <div class="icon" id="myIcon"><img src="images/1.png" alt="플레이어 선택"></div>
+    </div>
+  </div>
+
+  <div class="msg" id="msg">골라서 시작!</div>
+
+  <div class="btns">
+    <button onclick="play(0)">
+      <img src="images/1.png" alt="주먹">
+      <span>주먹</span>
+    </button>
+    <button onclick="play(1)">
+      <img src="images/2.png" alt="가위">
+      <span>가위</span>
+    </button>
+    <button onclick="play(2)">
+      <img src="images/3.png" alt="보">
+      <span>보</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const imgs = ["images/1.png", "images/2.png", "images/3.png"];
+  const labels = ["주먹", "가위", "보"];
+
+  let win = 0;
+  let lose = 0;
+  let draw = 0;
+
+  let going = false;
+
+  const comIcon = document.getElementById("comIcon");
+  const myIcon  = document.getElementById("myIcon");
+  const msg     = document.getElementById("msg");
+
+  const winNum  = document.getElementById("winNum");
+  const loseNum = document.getElementById("loseNum");
+  const drawNum = document.getElementById("drawNum");
+  const rateNum = document.getElementById("rateNum");
+
+  const btns = document.querySelectorAll(".btns button");
+
+  function play(me){
+
+    if(going === true){ return; }
+    going = true;
+
+    btns.forEach(function(btn){ btn.disabled = true; });
+
+    msg.className = "msg spinning";
+    msg.textContent = "돌아가는 중...";
+
+    let count = 0;
+
+    const rolling = setInterval(function(){
+
+        const r1 = Math.floor(Math.random() * 3);
+        const r2 = Math.floor(Math.random() * 3);
+        comIcon.innerHTML = "<img src='" + imgs[r1] + "' alt='컴퓨터 " + labels[r1] + "'>";
+        myIcon.innerHTML  = "<img src='" + imgs[r2] + "' alt='플레이어 " + labels[r2] + "'>";
+
+      count = count + 1;
+
+      if(count > 12){
+        clearInterval(rolling);
+
+          const com = Math.floor(Math.random() * 3);
+          comIcon.innerHTML = "<img src='" + imgs[com] + "' alt='컴퓨터 " + labels[com] + "'>";
+          myIcon.innerHTML  = "<img src='" + imgs[me]  + "' alt='플레이어 " + labels[me] + "'>";
+
+        if((me === 0 && com === 1) || (me === 1 && com === 2) || (me === 2 && com === 0)){
+          win = win + 1;
+          msg.className   = "msg win-msg";
+          msg.textContent = "🔥 우헤헤헿 이겼다!";
+        }
+        else if((me === 0 && com === 2) || (me === 1 && com === 0) || (me === 2 && com === 1)){
+          lose = lose + 1;
+          msg.className   = "msg lose-msg";
+          msg.textContent = "💀 이런 샤갈 졌다";
+        }
+        else{
+          draw = draw + 1;
+          msg.className   = "msg draw-msg";
+          msg.textContent = "😐 까비";
+        }
+
+        winNum.textContent  = win;
+        loseNum.textContent = lose;
+        drawNum.textContent = draw;
+
+        const total = win + lose + draw;
+        if(total === 0){
+          rateNum.textContent = "-%";
+        } else {
+          rateNum.textContent = Math.round(win / total * 100) + "%";
+        }
+
+        going = false;
+        btns.forEach(function(btn){ btn.disabled = false; });
+      }
+
+    }, 80);
+  }
+</script>
+</body>
+</html>

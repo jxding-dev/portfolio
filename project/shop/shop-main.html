@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘도 예뻐야지 · 쇼핑몰 메인</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="styles/reset.css"/>
+    <link rel="stylesheet" href="styles/base.css"/>
+    <link rel="stylesheet" href="styles/shop-main.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+    <!-- ① HEADER -->
+    <header id="header">
+        <div class="menu-top">
+            <p class="i-box"><a href="#"><img src="images/icon/mean/menu-sliders-heart.png" alt="메뉴"></a></p>
+            <h1><a href="shop-main.html"><img src="images/icon/mean/error-logo.png" alt="로고"></a></h1>
+            <p class="i-box icon-right">
+                <a href="#"><img src="images/icon/mean/search-clock.png" alt="검색"></a>
+                <a href="shop_cart.html"><img src="images/icon/mean/shopping-bag-heart.png" alt="장바구니"></a>
+            </p>
+        </div>
+    </header>
+
+    <!-- ② NOTICE BAR -->
+    <div class="notice-bar">
+        <span>📦 5만원 이상 무료배송</span>
+        <span class="sep">|</span>
+        <span>⚡ 오늘 주문 내일 도착</span>
+        <span class="sep">|</span>
+        <span>🔖 신규가입 15% 쿠폰</span>
+    </div>
+
+    <!-- ③ HERO BANNER SWIPER -->
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide hero-slide slide-1">
+                <img src="images/list-pd-01.jpg" alt="2025 SS 컬렉션" class="hero-img">
+                <div class="hero-text">
+                    <span class="hero-kicker">2025 SS COLLECTION</span>
+                    <h2 class="hero-title">NEW<br>SEASON</h2>
+                    <p class="hero-sub">지금 시즌의 핫 아이템</p>
+                    <a href="shop-list.html" class="hero-btn">SHOP NOW</a>
+                </div>
+            </div>
+
+            <div class="swiper-slide hero-slide slide-2">
+                <img src="images/list-pd-02.jpg" alt="데일리 룩" class="hero-img">
+                <div class="hero-text">
+                    <span class="hero-kicker">DAILY ESSENTIAL</span>
+                    <h2 class="hero-title">CASUAL<br>PICK</h2>
+                    <p class="hero-sub">매일 입어도 질리지 않는</p>
+                    <a href="shop-list.html" class="hero-btn">SHOP NOW</a>
+                </div>
+            </div>
+
+            <div class="swiper-slide hero-slide slide-3">
+                <img src="images/list-pd-04.jpg" alt="여름 스페셜" class="hero-img">
+                <div class="hero-text">
+                    <span class="hero-kicker">SUMMER SPECIAL</span>
+                    <h2 class="hero-title">HOT<br>SUMMER</h2>
+                    <p class="hero-sub">여름 신상 최대 40% 할인</p>
+                    <a href="shop-list.html" class="hero-btn">SHOP NOW</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination hero-pagination"></div>
+    </div>
+
+    <!-- ④ QUICK CATEGORY -->
+    <section class="quick-cat">
+        <ul class="qcat-list">
+            <li class="qcat-item active" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/home-heart.png" alt="전체"></div>
+                <span>전체</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/heart-outline.png" alt="아우터"></div>
+                <span>아우터</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/star-filled.png" alt="상의"></div>
+                <span>상의</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/triangle-up.png" alt="하의"></div>
+                <span>하의</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/gift-box.png" alt="원피스"></div>
+                <span>원피스</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/share-hearts.png" alt="가방"></div>
+                <span>가방</span>
+            </li>
+            <li class="qcat-item" onclick="location.href='shop-list.html'">
+                <div class="qcat-icon"><img src="images/icon/mean/settings-heart.png" alt="액세서리"></div>
+                <span>액세서리</span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ⑤ PROMO / COUPON BANNER -->
+    <div class="promo-banner" onclick="location.href='shop-list.html'">
+        <div class="promo-inner">
+            <div class="promo-left">
+                <span class="promo-badge">COUPON</span>
+                <p class="promo-title">첫 구매 15% 쿠폰 증정 🎁</p>
+                <p class="promo-sub">회원가입 후 바로 사용 가능</p>
+            </div>
+            <div class="promo-right">
+                <img src="images/icon/mean/gift-box.png" alt="쿠폰">
+            </div>
+        </div>
+    </div>
+
+    <!-- ⑥ BEST SECTION -->
+    <section class="pd-section">
+        <div class="section-head">
+            <h3 class="section-title">🔥 BEST</h3>
+            <a href="shop-list.html" class="section-more">전체보기 <img src="images/icon/mean/chevron-right.png" alt=""></a>
+        </div>
+        <div class="card-ui-wrap best-grid">
+
+            <article class="card-ui flow-y" onclick="location.href='shop_detail.html'">
+                <div class="img-mask">
+                    <img src="images/list-pd-02.jpg" alt="캐주얼 로고 티셔츠">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST 1</p>
+                    </div>
+                </div>
+                <div class="pd-info">
+                    <p class="pd-name">캐주얼 로고 티셔츠</p>
+                    <p class="pd-per">328개 구매중</p>
+                    <div class="pd-price">
+                        <span class="pd-rete">30%</span>
+                        <span class="pd-origin">28,000원</span>
+                        <span class="pd-sale">19,600원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-ui flow-y" onclick="location.href='shop_detail.html'">
+                <div class="img-mask">
+                    <img src="images/list-pd-04.jpg" alt="체크 할터넥 탑">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST 2</p>
+                    </div>
+                </div>
+                <div class="pd-info">
+                    <p class="pd-name">체크 할터넥 탑</p>
+                    <p class="pd-per">214개 구매중</p>
+                    <div class="pd-price">
+                        <span class="pd-rete">20%</span>
+                        <span class="pd-origin">19,900원</span>
+                        <span class="pd-sale">15,900원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-ui flow-y" onclick="location.href='shop_detail.html'">
+                <div class="img-mask">
+                    <img src="images/white-dress-model.jpg" alt="플리츠 미니 원피스">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST 3</p>
+                    </div>
+                </div>
+                <div class="pd-info">
+                    <p class="pd-name">플리츠 미니 원피스</p>
+                    <p class="pd-per">176개 구매중</p>
+                    <div class="pd-price">
+                        <span class="pd-rete">15%</span>
+                        <span class="pd-origin">45,000원</span>
+                        <span class="pd-sale">38,200원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card-ui flow-y" onclick="location.href='shop_detail.html'">
+                <div class="img-mask">
+                    <img src="images/list-pd-01.jpg" alt="블랙 밴디지 탑">
+                    <div class="i-func">
+                        <button class="i-box wishlist"><img src="images/icon/mean/heart-outline.png" alt="찜"></button>
+                        <p class="i-best">BEST 4</p>
+                    </div>
+                </div>
+                <div class="pd-info">
+                    <p class="pd-name">블랙 밴디지 탑</p>
+                    <p class="pd-per">142개 구매중</p>
+                    <div class="pd-price">
+                        <span class="pd-rete">25%</span>
+                        <span class="pd-origin">33,000원</span>
+                        <span class="pd-sale">24,700원</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ⑦ MID SALE BANNER -->
+    <div class="mid-banner" onclick="location.href='shop-list.html'">
+        <div class="mid-banner-text">
+            <p class="mid-banner-label">LIMITED SALE</p>
+            <p class="mid-banner-title">여름 한정 <em>최대 40%</em></p>
+            <p class="mid-banner-sub">오늘까지만 · D-3</p>
+        </div>
+        <span class="mid-banner-arrow">→</span>
+    </div>
+
+    <!-- ⑧ NEW ARRIVALS -->
+    <section class="pd-section">
+        <div class="section-head">
+            <h3 class="section-title">✨ NEW ARRIVAL</h3>
+            <a href="shop-list.html" class="section-more">전체보기 <img src="images/icon/mean/chevron-right.png" alt=""></a>
+        </div>
+        <div class="new-scroll">
+
+            <article class="new-card" onclick="location.href='shop_detail.html'">
+                <div class="new-mask">
+                    <img src="images/list-pd-01.jpg" alt="블랙 밴디지 탑">
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="new-pd-info">
+                    <p class="new-pd-name">블랙 밴디지 탑</p>
+                    <div class="new-pd-price">
+                        <span class="new-rete">25%</span>
+                        <span class="new-sale">24,700원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="new-card" onclick="location.href='shop_detail.html'">
+                <div class="new-mask">
+                    <img src="images/list-pd-02.jpg" alt="캐주얼 로고 티셔츠">
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="new-pd-info">
+                    <p class="new-pd-name">캐주얼 로고 티셔츠</p>
+                    <div class="new-pd-price">
+                        <span class="new-rete">30%</span>
+                        <span class="new-sale">19,600원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="new-card" onclick="location.href='shop_detail.html'">
+                <div class="new-mask">
+                    <img src="images/list-pd-03.jpg" alt="린넨 와이드 팬츠">
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="new-pd-info">
+                    <p class="new-pd-name">린넨 와이드 팬츠</p>
+                    <div class="new-pd-price">
+                        <span class="new-rete">10%</span>
+                        <span class="new-sale">17,910원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="new-card" onclick="location.href='shop_detail.html'">
+                <div class="new-mask">
+                    <img src="images/list-pd-04.jpg" alt="체크 할터넥 탑">
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="new-pd-info">
+                    <p class="new-pd-name">체크 할터넥 탑</p>
+                    <div class="new-pd-price">
+                        <span class="new-rete">20%</span>
+                        <span class="new-sale">15,900원</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="new-card" onclick="location.href='shop_detail.html'">
+                <div class="new-mask">
+                    <img src="images/white-dress-model.jpg" alt="플리츠 미니 원피스">
+                    <span class="new-badge">NEW</span>
+                </div>
+                <div class="new-pd-info">
+                    <p class="new-pd-name">플리츠 미니 원피스</p>
+                    <div class="new-pd-price">
+                        <span class="new-rete">15%</span>
+                        <span class="new-sale">38,200원</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ⑨ EDITORIAL PICK -->
+    <section class="editorial-section" onclick="location.href='shop_detail.html'">
+        <img src="images/pd-detail-05.jpg" alt="에디터 픽" class="editorial-img">
+        <div class="editorial-text">
+            <span class="editorial-kicker">EDITOR'S PICK</span>
+            <h3 class="editorial-title">이번 주<br>주목할 아이템</h3>
+            <span class="editorial-btn">지금 보기 →</span>
+        </div>
+    </section>
+
+    <!-- ⑩ TRUST BAR -->
+    <div class="trust-bar">
+        <div class="trust-item">
+            <span class="trust-num">4.9★</span>
+            <span class="trust-label">평균 만족도</span>
+        </div>
+        <div class="trust-item">
+            <span class="trust-num">12,400+</span>
+            <span class="trust-label">누적 리뷰</span>
+        </div>
+        <div class="trust-item">
+            <span class="trust-num">98%</span>
+            <span class="trust-label">재구매율</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        /* 히어로 배너 */
+        new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: { delay: 3800, disableOnInteraction: false },
+            pagination: { el: '.hero-pagination', clickable: true },
+            effect: 'fade',
+            fadeEffect: { crossFade: true },
+            speed: 800,
+        });
+
+        /* 카테고리 클릭 active */
+        document.querySelectorAll('.qcat-item').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.qcat-item').forEach(e => e.classList.remove('active'));
+                el.classList.add('active');
+            });
+        });
+
+        /* 찜 버튼 토글 */
+        $(".wishlist").click(function(e){
+            e.stopPropagation();
+            const isActive = $(this).hasClass("active");
+            if(isActive){
+                $(this).removeClass("active");
+                $(this).children("img").attr("src","images/icon/mean/heart-outline.png");
+            }else{
+                $(this).addClass("active");
+                $(this).children("img").attr("src","images/icon/mean/heart-filled.png");
+            }
+        });
+    </script>
+</body>
+</html>

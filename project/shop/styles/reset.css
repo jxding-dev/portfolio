@@ -1,0 +1,41 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
+
+
+
+body, p, ul, ol, li, dl, dt, dd, h1, h2, h3, button {
+  margin:0;
+  padding:0;
+}
+
+ul,ol,li{list-style:none;}
+
+button{
+  border:0;
+  background:transparent;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-size:15px;
+  font-weight:normal;
+}
+
+img{vertical-align:top;}
+
+a{
+  text-decoration:none;
+  color:#222;
+}
+
+input,
+textarea{
+  margin:0;
+  outline:none;
+}
+
+textarea{resize:none;}
+
+fieldset{
+  border:0;
+  padding:0;
+  margin:0;
+}

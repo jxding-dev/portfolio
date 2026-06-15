@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직접 주문해봐 · 라이브 데모</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #eaeaea; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: "Pretendard Variable", Pretendard, sans-serif;
+        }
+
+        .demo-info {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .demo-info h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .demo-info p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .tablet-mockup {
+            position: relative;
+            width: 1040px;  
+            height: 680px; 
+            background-color: #1a1a1a; 
+            border-radius: 40px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+
+        .iframe-wrapper {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 960px;
+            height: 600px;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .demo-frame {
+            width: 1280px;
+            height: 800px;
+            border: none;
+            transform: scale(0.75);
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="demo-info">
+        <h1>테이블오더 라이브 데모</h1>
+        <p>화면의 메뉴를 선택하고 옵션을 변경하며 자유롭게 체험해 보세요.</p>
+    </div>
+
+    <div class="tablet-mockup">
+        <div class="iframe-wrapper">
+            <iframe src="index.html" class="demo-frame" scrolling="no"></iframe>
+        </div>
+    </div>
+
+</body>
+</html>

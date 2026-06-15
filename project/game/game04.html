@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>다른 색 찾기 — 눈이 빠질 것 같음</title>
+
+<!-- 귀엽고 둥근 느낌의 Google 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ─── 기본 리셋 ─── */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
+/* ─── body: 파스텔 그라디언트 배경 (천천히 색이 바뀜) ─── */
+body {
+    font-size: 16px;
+    font-family: "Nunito", "Apple SD Gothic Neo", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 16px;
+
+    /* 3가지 파스텔 색이 부드럽게 이어지는 배경 */
+    background: linear-gradient(135deg, #ffd6e7 0%, #c3f0fa 50%, #d4f5c8 100%);
+    background-size: 300% 300%;
+    animation: bgShift 8s ease infinite;
+}
+
+/* 배경 색이 천천히 움직이는 애니메이션 */
+@keyframes bgShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1, h2 {
+    font-size: 32px;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ─── 카드 래퍼: 유리처럼 반투명한 글래스모피즘 ─── */
+.wrapper {
+    width: 500px;
+    max-width: 500px;
+    height: 650px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 28px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+
+    border-radius: 36px;
+
+    /* 반투명 흰색 배경 = 글래스모피즘 핵심 */
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 2px solid rgba(255, 255, 255, 0.8);
+
+    /* 부드럽고 귀여운 그림자 */
+    box-shadow:
+        0 8px 32px rgba(180, 140, 200, 0.25),
+        0 2px 8px rgba(255, 255, 255, 0.6) inset;
+
+    overflow: hidden;
+    position: relative;
+}
+
+/* ─── 제목: 통통하고 컬러풀하게 ─── */
+.wrapper h1 {
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+
+    /* 글자에 그라디언트 색 입히기 */
+    background: linear-gradient(90deg, #ff6fa8, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    /* 위아래로 살짝 떠오르는 애니메이션 */
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-4px); }
+}
+
+/* ─── 게이지 바 영역 ─── */
+.gauge-wrap {
+    width: 100%;
+    margin: 0;
+}
+
+.gauge-box {
+    width: 100%;
+    height: 11px;
+    border-radius: 999px;
+    overflow: hidden;
+    background-color: rgba(200, 200, 220, 0.35);
+}
+
+/* 게이지 색: 무지개 느낌 */
+.gauge {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #f9a8d4, #c084fc, #60a5fa);
+
+    /* 게이지 안에 반짝이는 줄무늬 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 반짝이는 하이라이트 선 */
+.gauge::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+}
+
+.time-text {
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #8b6fae;   /* 보라색 계열 */
+}
+
+/* ─── 레벨 뱃지 ─── */
+.info-text {
+    margin: 0;
+    padding: 5px 18px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 900;
+
+    /* 파스텔 핑크-퍼플 그라디언트 뱃지 */
+    background: linear-gradient(90deg, #fce7f3, #ede9fe);
+    color: #9333ea;
+
+    border: 2px solid rgba(167, 139, 250, 0.4);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+    transform: translateY(10px);
+}
+
+.level {
+    font-size: 22px;
+    line-height: 1;
+}
+
+/* ─── 버튼 그리드 ─── */
+.btns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    width: min(100%, 368px);
+    flex: 1;
+    align-content: center;
+    margin: 0 auto;
+    transform: translateY(6px);
+}
+
+.start-panel {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns button {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+
+    /* 젤리처럼 통통한 그림자 */
+    box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.08),
+        0 10px 20px rgba(0, 0, 0, 0.06),
+        0 1px 4px rgba(255,255,255,0.8) inset;
+
+    /* 부드러운 전환 */
+    transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.12s ease;
+}
+
+/* 버튼에 마우스 올렸을 때 살짝 커짐 */
+.btns button:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* 버튼 눌렸을 때 쑥 들어가는 효과 */
+.btns button:active {
+    transform: translateY(4px) scale(0.96);
+    box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.08),
+        0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 정답 버튼 (정답이 아닌 버튼들에 비해 색이 살짝 다름) */
+.btns button.target {
+    opacity: 0.5;
+}
+
+.feedback {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    z-index: 5;
+    min-width: 96px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid rgba(167, 139, 250, 0.45);
+    box-shadow: 0 10px 24px rgba(167, 139, 250, 0.28);
+    color: #9333ea;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, 12px) scale(0.9);
+}
+
+.feedback.show {
+    animation: feedback-pop 0.7s ease forwards;
+}
+
+.feedback.correct {
+    color: #16a34a;
+    border-color: rgba(34, 197, 94, 0.45);
+}
+
+.feedback.wrong {
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.45);
+}
+
+.clear-modal {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.48);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.clear-modal.show {
+    display: flex;
+}
+
+.clear-box {
+    width: min(100%, 320px);
+    padding: 28px 24px 24px;
+    border-radius: 24px;
+    border: 3px solid rgba(167, 139, 250, 0.55);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 40px rgba(167, 139, 250, 0.35);
+    text-align: center;
+    animation: clear-pop 0.35s ease both;
+}
+
+.clear-title {
+    margin-bottom: 10px;
+    color: #9333ea;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.15;
+}
+
+.clear-desc {
+    margin-bottom: 22px;
+    color: #8b6fae;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.clear-restart {
+    min-width: 150px;
+    min-height: 44px;
+    padding: 11px 28px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #f472b6, #a78bfa);
+    color: #fff;
+    font-family: "Nunito", "Apple SD Gothic Neo", sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(167, 139, 250, 0.45);
+}
+
+@keyframes clear-pop {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes feedback-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 12px) scale(0.9);
+    }
+    18% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.08);
+    }
+    72% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -8px) scale(0.96);
+    }
+}
+
+/* ─── 시작/다시 시작 버튼 ─── */
+.start-btn,
+.reset-btn {
+    margin: 0 auto;
+    padding: 8px 24px;
+    border: 0;
+    border-radius: 999px;
+
+    /* 핑크-퍼플 그라디언트 */
+    background: linear-gradient(90deg, #f472b6, #a78bfa);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: "Nunito", "Apple SD Gothic Neo", sans-serif;
+
+    box-shadow: 0 6px 20px rgba(167, 139, 250, 0.5);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.start-btn {
+    padding: 14px 42px;
+    font-size: 20px;
+}
+
+.reset-btn {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    min-width: 170px;
+    min-height: 46px;
+    padding: 12px 34px;
+    font-size: 18px;
+}
+
+.start-btn:hover,
+.reset-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 24px rgba(167, 139, 250, 0.55);
+}
+
+.start-btn:active,
+.reset-btn:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow: 0 4px 10px rgba(167, 139, 250, 0.4);
+}
+
+/* ─── 모바일 대응 ─── */
+@media (max-width: 520px) {
+    body {
+        align-items: flex-start;
+    }
+
+    .wrapper {
+        width: 100%;
+        height: auto;
+        min-height: 650px;
+        padding: 26px 14px 18px;
+        gap: 9px;
+    }
+
+    .btns {
+        width: min(100%, 348px);
+        gap: 7px;
+    }
+
+    h1, h2,
+    .wrapper h1 {
+        font-size: 25px;
+    }
+
+    .info-text {
+        font-size: 15px;
+    }
+
+    .level {
+        font-size: 20px;
+    }
+
+    .start-btn {
+        padding: 13px 34px;
+        font-size: 18px;
+    }
+
+    .reset-btn {
+        min-width: 160px;
+        min-height: 44px;
+        padding: 11px 30px;
+        font-size: 17px;
+    }
+
+    .feedback {
+        bottom: 22px;
+        font-size: 20px;
+    }
+
+    .clear-title {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- 제목 -->
+    <h1>🎨 다른 색 찾기</h1>
+
+    <!-- 타이머 게이지 -->
+    <div class="gauge-wrap">
+        <div class="gauge-box">
+            <div class="gauge"></div>
+        </div>
+        <p class="time-text">⏱ 남은 시간 <strong class="time-num">5</strong>초</p>
+    </div>
+
+    <!-- 레벨 뱃지 -->
+    <p class="info-text">✨ Level <strong class="level">1</strong></p>
+
+    <!-- 시작 화면 -->
+    <div class="start-panel">
+        <button class="start-btn">🎮 게임 시작</button>
+    </div>
+
+    <!-- 색깔 버튼들 -->
+    <div class="btns"></div>
+
+    <div class="feedback" aria-live="polite"></div>
+
+    <div class="clear-modal" aria-live="polite">
+        <div class="clear-box">
+            <div class="clear-title">색상 마스터!</div>
+            <p class="clear-desc">모든 색을 찾아냈어요.</p>
+            <button class="clear-restart">다시 시작</button>
+        </div>
+    </div>
+
+    <!-- 다시 시작 버튼 -->
+    <button class="reset-btn">🔄 다시 시작</button>
+</div>
+
+<script>
+/* ─── 요소 선택 ─── */
+const levelArea = document.querySelector(".level");
+const btnArea   = document.querySelector(".btns");
+const gauge     = document.querySelector(".gauge");
+const startPanel = document.querySelector(".start-panel");
+const startBtn  = document.querySelector(".start-btn");
+const resetBtn  = document.querySelector(".reset-btn");
+const timeNum   = document.querySelector(".time-num");
+const feedback  = document.querySelector(".feedback");
+const clearModal = document.querySelector(".clear-modal");
+const clearRestart = document.querySelector(".clear-restart");
+
+/* ─── 게임 상태 변수 ─── */
+let levelNum;
+let cols;
+let opacityValue;
+let lastLevel = 20;
+
+let timerID     = null;
+let countdownID = null;
+
+/* ─── 시작/다시 시작 버튼 클릭 ─── */
+startBtn.addEventListener("click", startGame);
+resetBtn.addEventListener("click", startGame);
+clearRestart.addEventListener("click", startGame);
+
+function startGame() {
+    levelNum     = 1;
+    cols         = 4;
+    opacityValue = 0.5;
+
+    startPanel.style.display = "none";
+    btnArea.style.display    = "grid";
+    resetBtn.style.display = "block";
+    resetBtn.style.visibility = "hidden";
+    resetBtn.style.opacity = 0;
+    resetBtn.style.pointerEvents = "none";
+    clearModal.classList.remove("show");
+    hideFeedback();
+    timeNum.textContent    = 5;
+
+    clearTimeout(timerID);
+    clearInterval(countdownID);
+
+    gauge.style.transition = "none";
+    gauge.style.width      = "100%";
+
+    renderBtns();
+}
+
+/* 페이지 로드 시 시작 대기 */
+showReadyScreen();
+
+function showReadyScreen() {
+    levelNum     = 1;
+    cols         = 4;
+    opacityValue = 0.5;
+
+    clearTimeout(timerID);
+    clearInterval(countdownID);
+
+    levelArea.textContent = 1;
+    timeNum.textContent   = 5;
+    gauge.style.transition = "none";
+    gauge.style.width      = "100%";
+
+    btnArea.innerHTML = "";
+    btnArea.style.display = "none";
+    startPanel.style.display = "flex";
+    resetBtn.style.display = "block";
+    resetBtn.style.visibility = "hidden";
+    resetBtn.style.opacity = 0;
+    resetBtn.style.pointerEvents = "none";
+    clearModal.classList.remove("show");
+    hideFeedback();
+}
+
+/* ─── 버튼 클릭 이벤트 (이벤트 위임) ─── */
+btnArea.addEventListener("click", (e) => {
+    if (e.target.tagName !== "BUTTON" || levelNum > lastLevel) return;
+
+    const clicked  = e.target;
+    const isTarget = clicked.classList.contains("target");
+
+    if (isTarget) {
+        /* 정답 맞힌 경우 */
+        clearTimeout(timerID);
+        clearInterval(countdownID);
+        showFeedback("정답!", "correct");
+
+        levelNum++;
+
+        if (levelNum > lastLevel) {
+            clearGame();
+            return;
+        }
+
+        renderBtns();
+    } else {
+        /* 틀린 경우 */
+        showFeedback("땡!", "wrong");
+        return;
+    }
+});
+
+function showFeedback(text, type) {
+    feedback.textContent = text;
+    feedback.className = `feedback ${type}`;
+    void feedback.offsetWidth;
+    feedback.classList.add("show");
+}
+
+function hideFeedback() {
+    feedback.textContent = "";
+    feedback.className = "feedback";
+}
+
+function clearGame() {
+    clearTimeout(timerID);
+    clearInterval(countdownID);
+    btnArea.querySelectorAll("button").forEach((btn) => {
+        btn.disabled = true;
+    });
+    resetBtn.style.visibility = "hidden";
+    resetBtn.style.opacity = 0;
+    resetBtn.style.pointerEvents = "none";
+    clearModal.classList.add("show");
+}
+
+/* ─── 버튼 렌더링 ─── */
+function renderBtns() {
+    /* 10레벨마다 난이도 올리기 (열 수 증가, 투명도 올라감) */
+    if (levelNum > 10 && levelNum % 10 === 1) {
+        cols++;
+        opacityValue += 0.1;
+    }
+
+    const colNum    = cols ** 2;
+    const targetNum = Math.floor(Math.random() * colNum);
+
+    let btnHtml = "";
+    for (let i = 0; i < colNum; i++) {
+        if (i === targetNum) {
+            btnHtml += `<button class="target"></button>`;
+        } else {
+            btnHtml += `<button></button>`;
+        }
+    }
+
+    btnArea.innerHTML = btnHtml;
+    btnArea.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+    /* 정답 버튼 투명도 설정 */
+    const targetBtn = btnArea.querySelector(".target");
+    targetBtn.style.opacity = opacityValue;
+
+    levelArea.textContent = levelNum;
+
+    randomColor();
+    startTimer();
+}
+
+/* ─── 버튼 랜덤 색 설정 ─── */
+function randomColor() {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+
+    const btns = btnArea.querySelectorAll("button");
+    btns.forEach((btn) => {
+        btn.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    });
+}
+
+/* ─── 타이머 시작 ─── */
+function startTimer() {
+    clearTimeout(timerID);
+    clearInterval(countdownID);
+
+    /* 게이지 너비 초기화 */
+    gauge.style.transition = "none";
+    gauge.style.width      = "100%";
+
+    timeNum.textContent = 5;
+
+    /* 살짝 딜레이 후 애니메이션 시작 (즉시 시작하면 transition 무시됨) */
+    setTimeout(() => {
+        gauge.style.transition = "width 5s linear";
+        gauge.style.width      = "0%";
+    }, 50);
+
+    let remain = 5;
+
+    countdownID = setInterval(() => {
+        remain--;
+        if (remain >= 0) {
+            timeNum.textContent = remain;
+        }
+    }, 1000);
+
+    timerID = setTimeout(() => {
+        clearInterval(countdownID);
+        gameOver();
+    }, 5000);
+}
+
+/* ─── 게임 오버 처리 ─── */
+function gameOver() {
+    clearTimeout(timerID);
+    clearInterval(countdownID);
+
+    /* 버튼 비활성화 & 회색으로 바꾸기 */
+    const btns = btnArea.querySelectorAll("button");
+    btns.forEach((btn) => {
+        btn.disabled              = true;
+        btn.style.backgroundColor = "#d1d5db";
+        btn.style.opacity         = 1;
+        btn.style.boxShadow       = "none";
+    });
+
+    resetBtn.style.display = "block";
+    resetBtn.style.visibility = "visible";
+    resetBtn.style.opacity = 1;
+    resetBtn.style.pointerEvents = "auto";
+}
+</script>
+</body>
+</html>
